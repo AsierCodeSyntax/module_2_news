@@ -1,0 +1,8 @@
+feedparser
+requests
+beautifulsoup4
+trafilatura
+psycopg[binary]
+pyyaml
+qdrant-client
+jinja2

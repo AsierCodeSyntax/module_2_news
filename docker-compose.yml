@@ -1,0 +1,72 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: techwatch_postgres
+    environment:
+      POSTGRES_DB: techwatch
+      POSTGRES_USER: techwatch
+      POSTGRES_PASSWORD: techwatch
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: techwatch_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  app:
+    build: ./app
+    container_name: techwatch_app
+    depends_on:
+      - postgres
+      - qdrant
+    environment:
+      DATABASE_URL: "postgresql://techwatch:techwatch@postgres:5432/techwatch"
+      QDRANT_URL: "http://qdrant:6333"
+      SOURCES_YAML: "/workspace/sources.yaml"
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace
+    command: ["bash"]
+
+  adminer:
+    image: adminer:latest
+    container_name: techwatch_adminer
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: techwatch_n8n
+    profiles: ["automation"]   # <-- NO se levanta salvo que lo actives
+    depends_on:
+      - postgres
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=techwatch
+      - DB_POSTGRESDB_USER=techwatch
+      - DB_POSTGRESDB_PASSWORD=techwatch
+      - GENERIC_TIMEZONE=Europe/Madrid
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  pg_data:
+  qdrant_data:
+  n8n_data:

@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-02-13T15:07:43.931411+00:00",
+  "topic": "plone",
+  "window": {
+    "since": "2026-01-30T15:07:43.919513+00:00",
+    "until": "2026-02-13T15:07:43.919513+00:00",
+    "window_days": 14
+  },
+  "max_items": 15,
+  "items": [
+    {
+      "id": 1,
+      "topic": "plone",
+      "source_id": "plone_forum_announcements",
+      "source_type": "rss",
+      "title": "Plone Foundation's 2025 financial statements and 2026 budget are now published",
+      "url": "https://community.plone.org/t/plone-foundations-2025-financial-statements-and-2026-budget-are-now-published/22838",
+      "canonical_url": "https://community.plone.org/t/plone-foundations-2025-financial-statements-and-2026-budget-are-now-published/22838",
+      "published_at": "2026-02-13T12:55:15+00:00",
+      "fetched_at": "2026-02-13T13:41:46.926182+00:00",
+      "priority": 40,
+      "tags": [
+        "community",
+        "announcement",
+        "class",
+        "https",
+        "plone.org",
+        "div",
+        "plone",
+        "foundation",
+        "emoji",
+        "href"
+      ]
+    },
+    {
+      "id": 2,
+      "topic": "plone",
+      "source_id": "plone_forum_announcements",
+      "source_type": "rss",
+      "title": "Marketing Team Meeting Notes – 2026-02-10 (15:00 UTC)",
+      "url": "https://community.plone.org/t/marketing-team-meeting-notes-2026-02-10-15-00-utc/22833",
+      "canonical_url": "https://community.plone.org/t/marketing-team-meeting-notes-2026-02-10-15-00-utc/22833",
+      "published_at": "2026-02-11T16:22:27+00:00",
+      "fetched_at": "2026-02-13T13:41:46.930214+00:00",
+      "priority": 40,
+      "tags": [
+        "community",
+        "announcement",
+        "strong",
+        "href",
+        "plone.org",
+        "marketing",
+        "meeting",
+        "https",
+        "next",
+        "feb"
+      ]
+    },
+    {
+      "id": 3,
+      "topic": "plone",
+      "source_id": "plone_forum_announcements",
+      "source_type": "rss",
+      "title": "Volto Team meeting minutes 2026-02-10",
+      "url": "https://community.plone.org/t/volto-team-meeting-minutes-2026-02-10/22828",
+      "canonical_url": "https://community.plone.org/t/volto-team-meeting-minutes-2026-02-10/22828",
+      "published_at": "2026-02-10T11:01:58+00:00",
+      "fetched_at": "2026-02-13T13:41:46.931469+00:00",
+      "priority": 40,
+      "tags": [
+        "community",
+        "announcement",
+        "href",
+        "https",
+        "volto",
+        "class",
+        "community.plone.org",
+        "anchor",
+        "name",
+        "plone"
+      ]
+    }
+  ]
+}
