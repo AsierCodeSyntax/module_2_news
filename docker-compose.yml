@@ -30,6 +30,11 @@ services:
       DATABASE_URL: "postgresql://techwatch:techwatch@postgres:5432/techwatch"
       QDRANT_URL: "http://qdrant:6333"
       SOURCES_YAML: "/workspace/sources.yaml"
+      LLM_PROVIDER: "${LLM_PROVIDER:-gemini}"
+      GEMINI_API_KEY: "${GEMINI_API_KEY}"
+      OLLAMA_API_URL: "${OLLAMA_API_URL}"
+      OLLAMA_API_KEY: "${OLLAMA_API_KEY}"
+      OLLAMA_MODEL: "${OLLAMA_MODEL}"
     volumes:
       - ./:/workspace
     working_dir: /workspace

@@ -1,0 +1,68 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{lmodern}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{titlesec}
+
+% Colores y estilos
+\definecolor{primary}{RGB}{41, 128, 185}
+\hypersetup{colorlinks=true, linkcolor=primary, urlcolor=primary}
+\titleformat{\section}{\Large\bfseries\color{primary}}{}{0em}{}[\titlerule]
+
+\title{\textbf{TechWatch Weekly Bulletin}}
+\author{Generado automáticamente}
+\date{<< date >>}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+Boletín semanal de vigilancia tecnológica. Contiene las noticias más relevantes de la semana curadas y resumidas mediante Inteligencia Artificial.
+\end{abstract}
+
+\vspace{1cm}
+
+<% if topics.plone['items'] %>
+\section*{Noticias del Ecosistema Plone}
+\begin{itemize}
+<% for item in topics.plone['items'] %>
+    \item \textbf{<< item.title | escape_tex >>} \hfill \textit{Score: << item.llm_score >>/10} \\
+    << item.summary_short | escape_tex >> \\
+    {\footnotesize \url{<< item.url | escape_tex >>}} \vspace{0.3cm}
+<% endfor %>
+\end{itemize}
+<% endif %>
+
+
+<% if topics.django['items'] %>
+\section*{Novedades en Django}
+\begin{itemize}
+<% for item in topics.django['items'] %>
+    \item \textbf{<< item.title | escape_tex >>} \hfill \textit{Score: << item.llm_score >>/10} \\
+    << item.summary_short | escape_tex >> \\
+    {\footnotesize \url{<< item.url | escape_tex >>}} \vspace{0.3cm}
+<% endfor %>
+\end{itemize}
+<% endif %>
+
+
+<% if topics.ai['sections'] %>
+\section*{Avances en Inteligencia Artificial}
+<% for sec in topics.ai['sections'] %>
+    \subsection*{<< sec.name | capitalize >>}
+    \begin{itemize}
+    <% for item in sec['items'] %>
+        \item \textbf{<< item.title | escape_tex >>} \hfill \textit{Score: << item.llm_score >>/10} \\
+        << item.summary_short | escape_tex >> \\
+        {\footnotesize \url{<< item.url | escape_tex >>}} \vspace{0.3cm}
+    <% endfor %>
+    \end{itemize}
+<% endfor %>
+<% endif %>
+
+\end{document}

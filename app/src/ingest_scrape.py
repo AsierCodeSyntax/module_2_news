@@ -135,7 +135,7 @@ def insert_item(
               (%s, %s, 'scrape', %s, %s, %s,
                %s, %s, %s, %s,
                'new', 0, %s, %s::jsonb)
-            ON CONFLICT (topic, canonical_url) DO NOTHING
+            ON CONFLICT (topic, url) DO NOTHING
             """,
             (
                 topic,

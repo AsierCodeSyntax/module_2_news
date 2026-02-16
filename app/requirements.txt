@@ -6,3 +6,5 @@ psycopg[binary]
 pyyaml
 qdrant-client
 jinja2
+sentence-transformers
+google-generativeai

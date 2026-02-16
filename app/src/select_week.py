@@ -1,9 +1,8 @@
 import argparse
 import json
 import os
-from dataclasses import dataclass
 from datetime import datetime, timezone, timedelta
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import psycopg
 import yaml
@@ -24,9 +23,7 @@ def get_topic_bulletin_cfg(cfg: Dict[str, Any], topic: str) -> Dict[str, Any]:
 
     window_days = int(topic_cfg.get("window_days", defaults.get("window_days", 7)))
     max_items = int(topic_cfg.get("max_items", 15))
-
-    # opcional: sections para ai
-    sections = topic_cfg.get("sections")  # puede ser None
+    sections = topic_cfg.get("sections")  
 
     return {"window_days": window_days, "max_items": max_items, "sections": sections}
 
@@ -52,42 +49,30 @@ def select_items_for_topic(
     tag_filter: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """
-    Selecciona items READY para el topic.
-    Si tag_filter está presente, filtra items que contengan ese tag (p.ej. 'arxiv' o 'industry').
+    Selecciona items EVALUATED (procesados por el LLM) para el topic.
+    Ordena por llm_score (nota de la IA) y luego por priority (tu heurística).
     """
     with conn.cursor() as cur:
-        if tag_filter:
-            cur.execute(
-                """
-                SELECT id, topic, source_id, source_type, title, url, canonical_url,
-                       published_at, fetched_at, priority, tags
-                FROM items
-                WHERE topic=%s
-                  AND status='ready'
-                  AND published_at >= %s
-                  AND published_at < %s
-                  AND %s = ANY(tags)
-                ORDER BY priority DESC, published_at DESC NULLS LAST, fetched_at DESC
-                LIMIT %s
-                """,
-                (topic, since, until, tag_filter, limit),
-            )
-        else:
-            cur.execute(
-                """
-                SELECT id, topic, source_id, source_type, title, url, canonical_url,
-                       published_at, fetched_at, priority, tags
-                FROM items
-                WHERE topic=%s
-                  AND status='ready'
-                  AND published_at >= %s
-                  AND published_at < %s
-                ORDER BY priority DESC, published_at DESC NULLS LAST, fetched_at DESC
-                LIMIT %s
-                """,
-                (topic, since, until, limit),
-            )
+        query = """
+            SELECT id, topic, source_id, title, url, 
+                   published_at, priority, tags, summary_short, llm_score
+            FROM items
+            WHERE topic=%s
+              AND status='evaluated'
+              AND published_at >= %s
+              AND published_at < %s
+        """
+        params = [topic, since, until]
 
+        if tag_filter:
+            query += " AND %s = ANY(tags)"
+            params.append(tag_filter)
+
+        # La clave de tu requisito: Ordenar localmente por nota del LLM
+        query += " ORDER BY llm_score DESC, priority DESC, published_at DESC LIMIT %s"
+        params.append(limit)
+
+        cur.execute(query, params)
         cols = [d[0] for d in cur.description]
         rows = cur.fetchall()
 
@@ -99,14 +84,13 @@ def select_items_for_topic(
                 "id": row["id"],
                 "topic": row["topic"],
                 "source_id": row["source_id"],
-                "source_type": row["source_type"],
                 "title": row["title"],
                 "url": row["url"],
-                "canonical_url": row["canonical_url"],
                 "published_at": iso(row["published_at"]),
-                "fetched_at": iso(row["fetched_at"]),
                 "priority": row["priority"],
                 "tags": list(row["tags"] or []),
+                "summary_short": row["summary_short"],
+                "llm_score": row["llm_score"]
             }
         )
     return out
@@ -114,19 +98,16 @@ def select_items_for_topic(
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--topic", required=True, choices=["plone", "django", "ai"])
     ap.add_argument("--sources", default=os.environ.get("SOURCES_YAML", "sources.yaml"))
     ap.add_argument("--db", default=os.environ.get("DATABASE_URL"))
     ap.add_argument("--out", default=os.environ.get("BULLETIN_OUT", "app/build/bulletin.json"))
-    ap.add_argument("--until", default=None, help="ISO datetime UTC (default: now). Example: 2026-02-13T00:00:00Z")
+    ap.add_argument("--until", default=None, help="ISO datetime UTC")
     args = ap.parse_args()
 
     if not args.db:
-        raise SystemExit("DATABASE_URL not set. Provide --db or set env DATABASE_URL.")
+        raise SystemExit("DATABASE_URL not set.")
 
     cfg = load_sources_yaml(args.sources)
-    bcfg = get_topic_bulletin_cfg(cfg, args.topic)
-
     until = utcnow()
     if args.until:
         s = args.until.strip().replace("Z", "+00:00")
@@ -135,45 +116,57 @@ def main() -> None:
             until = until.replace(tzinfo=timezone.utc)
         until = until.astimezone(timezone.utc)
 
-    since = until - timedelta(days=bcfg["window_days"])
-    max_items = int(bcfg["max_items"])
-
     ensure_dir(os.path.dirname(args.out))
+
+    # Estructura del JSON que consumirá el PDF en LaTeX
+    bulletin_payload = {
+        "generated_at": iso(utcnow()),
+        "topics": {}
+    }
 
     with psycopg.connect(args.db) as conn:
         conn.execute("SET TIME ZONE 'UTC'")
         conn.commit()
 
-        # Si topic ai tiene secciones ["industry","arxiv"], hacemos split por tags
-        sections = bcfg.get("sections")
-        payload: Dict[str, Any] = {
-            "generated_at": iso(utcnow()),
-            "topic": args.topic,
-            "window": {"since": iso(since), "until": iso(until), "window_days": bcfg["window_days"]},
-            "max_items": max_items,
-        }
+        # Automatizamos el paso por las 3 categorías
+        for topic in ["plone", "django", "ai"]:
+            bcfg = get_topic_bulletin_cfg(cfg, topic)
+            since = until - timedelta(days=bcfg["window_days"])
+            max_items = int(bcfg["max_items"])
 
-        if sections and isinstance(sections, list) and len(sections) > 0:
-            per_section = max(1, max_items // len(sections))
-            sec_out = []
-            for sec in sections:
-                items = select_items_for_topic(conn, args.topic, since, until, per_section, tag_filter=sec)
-                sec_out.append({"name": sec, "items": items})
-            payload["sections"] = sec_out
-            payload["items"] = []  # para consistencia
-        else:
-            items = select_items_for_topic(conn, args.topic, since, until, max_items, tag_filter=None)
-            payload["items"] = items
+            topic_data = {
+                "window_days": bcfg["window_days"],
+                "since": iso(since),
+                "until": iso(until),
+            }
 
+            sections = bcfg.get("sections")
+            if sections and isinstance(sections, list) and len(sections) > 0:
+                per_section = max(1, max_items // len(sections))
+                sec_out = []
+                for sec in sections:
+                    items = select_items_for_topic(conn, topic, since, until, per_section, tag_filter=sec)
+                    sec_out.append({"name": sec, "items": items})
+                topic_data["sections"] = sec_out
+            else:
+                items = select_items_for_topic(conn, topic, since, until, max_items, tag_filter=None)
+                topic_data["items"] = items
+
+            bulletin_payload["topics"][topic] = topic_data
+
+        # Actualizamos el estado de las noticias en la BD a 'published' para no repetir en el futuro
+        # (Esto es opcional pero muy recomendado para no tener noticias zombie). De momento solo generamos el JSON.
+        
         with open(args.out, "w", encoding="utf-8") as f:
-            json.dump(payload, f, ensure_ascii=False, indent=2)
+            json.dump(bulletin_payload, f, ensure_ascii=False, indent=2)
 
-    print(f"Wrote: {args.out}")
-    if payload.get("sections"):
-        for sec in payload["sections"]:
-            print(f"Section '{sec['name']}': {len(sec['items'])} items")
-    else:
-        print(f"Items: {len(payload['items'])}")
+    print(f"\n✅ Boletín global generado con éxito en: {args.out}")
+    for t, d in bulletin_payload["topics"].items():
+        if "sections" in d:
+            total = sum(len(s["items"]) for s in d["sections"])
+            print(f" 📌 {t.upper()}: {total} items seleccionados (divididos en secciones)")
+        else:
+            print(f" 📌 {t.upper()}: {len(d['items'])} items seleccionados")
 
 
 if __name__ == "__main__":
