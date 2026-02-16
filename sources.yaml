@@ -22,7 +22,7 @@ topics:
     bulletin:
       cadence: "weekly"
       window_days: 14
-      max_items: 15
+      max_items: 5
 
     sources:
       - id: "plone_official_news"
@@ -81,7 +81,7 @@ topics:
 
   django:
     bulletin:
-      max_items: 15
+      max_items: 5
 
     sources:
       - id: "django_official_weblog"
@@ -118,7 +118,7 @@ topics:
       max_items_per_source: 200
 
     bulletin:
-      max_items: 20
+      max_items: 10
       sections: ["industry", "arxiv"]
 
     sources:

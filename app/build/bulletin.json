@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-02-16T12:54:32.397709+00:00",
+  "generated_at": "2026-02-16T16:48:20.711729+00:00",
   "topics": {
     "plone": {
       "window_days": 14,
-      "since": "2026-02-02T12:54:32.397676+00:00",
-      "until": "2026-02-16T12:54:32.397676+00:00",
+      "since": "2026-02-02T16:48:20.711695+00:00",
+      "until": "2026-02-16T16:48:20.711695+00:00",
       "items": [
         {
           "id": 1,
@@ -26,8 +26,8 @@
             "emoji",
             "href"
           ],
-          "summary_short": "La Fundación Plone ha publicado sus estados financieros de 2025 y el presupuesto para 2026, mostrando transparencia y sostenibilidad. Se agradece a Steve Piercy por su trabajo en la recopilación de esta información, y se invita a patrocinar Plone para fortalecer el proyecto.",
-          "llm_score": 7
+          "summary_short": "Plone Foundation-ek 2025eko finantza-egoeraren txostenak eta 2026ko aurrekontua argitaratu ditu. Komunitatearen indarra eta jasangarritasuna erakusten du, babesle eta dohaintza bidez.",
+          "llm_score": 8.1
         },
         {
           "id": 2,
@@ -49,8 +49,8 @@
             "next",
             "feb"
           ],
-          "summary_short": "Resumen de la reunión del equipo de marketing de Plone del 10 de febrero de 2026, donde se trataron temas como la renovación de plone.org, la conferencia Plone 2026 y el Día Mundial de Plone 2026.",
-          "llm_score": 7
+          "summary_short": "Biltzar honetan, Plone-ren marketing estrategia aztertzen da, webguneko berritzeak, konferentziaren antolaketa eta komunitatearen lankidetza sustatzeko ekintzak barne hartzen ditu. Finantza-gardentasuna, sponsorren ikusgarritasuna eta World Plone Day-ko ekintzak ere azpimarratzen dira.",
+          "llm_score": 7.8
         },
         {
           "id": 3,
@@ -72,58 +72,16 @@
             "name",
             "plone"
           ],
-          "summary_short": "Minutas de la reunión del equipo Volto del 10 de febrero de 2026. Se discuten temas como la creación de un calendario para el equipo, mejoras en la navegación, pegado de tablas y el estado de Volto 19.",
-          "llm_score": 7
+          "summary_short": "Minutu-biltzarrak Volto taldearen lanbideak lantzen ditu, hala nola, plone.org-en egutegia, nabigazio-izenak, taulak itsatsiz konpontzea eta Volto 19aren amaiera. Playwright-ren probak ere aztertu ziren.",
+          "llm_score": 7.8
         }
       ]
     },
     "django": {
       "window_days": 7,
-      "since": "2026-02-09T12:54:32.397676+00:00",
-      "until": "2026-02-16T12:54:32.397676+00:00",
+      "since": "2026-02-09T16:48:20.711695+00:00",
+      "until": "2026-02-16T16:48:20.711695+00:00",
       "items": [
-        {
-          "id": 183,
-          "topic": "django",
-          "source_id": "django_news_newsletter",
-          "title": "Django News - The Post-Heroku Django World - Feb 13th 2026",
-          "url": "https://django-news.com/issues/324",
-          "published_at": "2026-02-13T11:00:00+00:00",
-          "priority": 100,
-          "tags": [
-            "https",
-            "href",
-            "rss",
-            "cur.at",
-            "django",
-            "code",
-            "python",
-            "report"
-          ],
-          "summary_short": "Este artículo de noticias de Django del 13 de febrero de 2026 resume actividades del Consejo de Dirección de Django, mejoras de búsqueda en Read the Docs, una versión alfa de Python 3.15.0, iniciativas de la Python Software Foundation, informes de los 'Django Fellows', noticias de Wagtail CMS y actualizaciones recientes en el desarrollo de Django, incluyendo la fusión de 11 pull requests de 8 contribuyentes, y la bienvenida a dos nuevos contribuyentes.",
-          "llm_score": 8
-        },
-        {
-          "id": 113,
-          "topic": "django",
-          "source_id": "django_official_weblog",
-          "title": "Django Steering Council 2025 Year in Review",
-          "url": "https://www.djangoproject.com/weblog/2026/feb/11/steering-council-2025-year-in-review/",
-          "published_at": "2026-02-11T14:44:22+00:00",
-          "priority": 60,
-          "tags": [
-            "django",
-            "steering",
-            "council",
-            "have",
-            "been",
-            "process",
-            "href",
-            "https"
-          ],
-          "summary_short": "El Django Steering Council de 2025 se centró en revitalizar su papel, simplificar procesos como DEP 10 y mejorar la visibilidad del ecosistema de paquetes de terceros de Django a través de la nueva página 'Community Ecosystem'. También se enfocaron en la documentación y la organización de participantes en el Google Summer of Code.",
-          "llm_score": 8
-        },
         {
           "id": 193,
           "topic": "django",
@@ -142,8 +100,8 @@
             "pre",
             "use"
           ],
-          "summary_short": "El artículo señala un problema al usar `QueryDict` directamente con `Client.post` en pruebas unitarias de Django, ya que `QueryDict._getitem_` solo retorna el último elemento de una lista.  Propone convertir `QueryDict` a `dict` antes de pasarlo a `client.post` para evitar este comportamiento inesperado.",
-          "llm_score": 8
+          "summary_short": "Artikulu honek `QueryDict`-en erabilerari buruzko ohar bat gehitu behar dela proposatzen du Django-ren `Client.post` dokumentazioan. `QueryDict`-en `__getitem__` metodoak zerrendako azken elementua bakarrik itzultzen duela azalduko luke, forma-datuak bidaltzean arazoak eragin ditzakeelarik.",
+          "llm_score": 8.2
         },
         {
           "id": 159,
@@ -163,50 +121,50 @@
             "header",
             "img"
           ],
-          "summary_short": "El artículo presenta 'La Suite Numerique', un sistema de colaboración digital de código abierto basado en Django, desarrollado por el gobierno francés. Busca explorar el interés y la posible participación de la comunidad Django en este proyecto, especialmente en su modelo de URLs y compartición de archivos.",
-          "llm_score": 8
+          "summary_short": "Hona hemen Django erabiliz NextCloud edo Google Drive bezalako sistema bat eraiki nahi duen gizon baten esperientzia. Suitenumerique proiektua deskribatzen du, Frantziako gobernuak garatutako Django-ren bertsio bat, eta intereseko beste tresna bat ere aurkezten du.",
+          "llm_score": 8.2
         },
         {
-          "id": 194,
+          "id": 183,
           "topic": "django",
-          "source_id": "django_forum_dev",
-          "title": "Contributor Introduction – Keha Chandrakar (Preparing for GSoC 2026)",
-          "url": "https://forum.djangoproject.com/t/contributor-introduction-keha-chandrakar-preparing-for-gsoc-2026/44171",
-          "published_at": "2026-02-12T09:35:46+00:00",
+          "source_id": "django_news_newsletter",
+          "title": "Django News - The Post-Heroku Django World - Feb 13th 2026",
+          "url": "https://django-news.com/issues/324",
+          "published_at": "2026-02-13T11:00:00+00:00",
           "priority": 100,
           "tags": [
-            "class",
-            "div",
-            "span",
             "https",
-            "github.com",
-            "django",
             "href",
-            "rel"
+            "rss",
+            "cur.at",
+            "django",
+            "code",
+            "python",
+            "report"
           ],
-          "summary_short": "Este artículo introduce a Keha Chandrakar, un estudiante de Data Science que contribuye a Django desde hace más de 3 años, preparándose para GSoC 2026. Su reciente contribución es una Pull Request que vende los activos JS y CSS de Leaflet para eliminar dependencias de CDN.",
-          "llm_score": 7
+          "summary_short": "Artikulu honek Django proiektuko berriak biltzen ditu, 2026ko otsailaren 13ko data duena.  Steering Council-en urteko bilarrera, Read the Docs-eko bilaketa hobekuntzak, Python 3.15.0aren bertsio berria, eta Wagtail CMS sari izenpetzeak aipatu dira.",
+          "llm_score": 8.1
         },
         {
-          "id": 158,
+          "id": 113,
           "topic": "django",
-          "source_id": "django_security_announcements",
-          "title": "dj-urls-panel: URL introspection and testing right in the admin",
-          "url": "https://forum.djangoproject.com/t/dj-urls-panel-url-introspection-and-testing-right-in-the-admin/44178",
-          "published_at": "2026-02-12T18:12:44+00:00",
-          "priority": 55,
+          "source_id": "django_official_weblog",
+          "title": "Django Steering Council 2025 Year in Review",
+          "url": "https://www.djangoproject.com/weblog/2026/feb/11/steering-council-2025-year-in-review/",
+          "published_at": "2026-02-11T14:44:22+00:00",
+          "priority": 60,
           "tags": [
-            "dj-urls-panel",
-            "project",
-            "href",
-            "https",
-            "admin",
             "django",
-            "class",
-            "inline-onebox"
+            "steering",
+            "council",
+            "have",
+            "been",
+            "process",
+            "href",
+            "https"
           ],
-          "summary_short": "dj-urls-panel es un panel para Django Admin que proporciona una mejor visualización de las URLs del proyecto, incluyendo patrones, vistas, espacios de nombres y conflictos. También ofrece una interfaz de pruebas alternativa a herramientas como Swagger UI.",
-          "llm_score": 7
+          "summary_short": "Steering Council de Django 2025eko lana laburtzen du, DEP 10aren prozesua sinplifikatzea, funts berriak GitHub-en kudeatzea eta komunitatearen ekosistema hobetzea ahalbidetzean arreta berezia jarriz.",
+          "llm_score": 8.1
         },
         {
           "id": 195,
@@ -226,99 +184,15 @@
             "uploads",
             "djangoproject"
           ],
-          "summary_short": "El usuario reporta una inconsistencia en el tema oscuro (dark mode) del sitio web de Django. Al navegar de la página principal (djangoproject.com) a la sección de Issues (code.djangoproject.com), el tema oscuro no se mantiene, pasando a un tema claro.",
-          "llm_score": 7
-        },
-        {
-          "id": 196,
-          "topic": "django",
-          "source_id": "django_forum_dev",
-          "title": "How is cache.clear() supposed to work?",
-          "url": "https://forum.djangoproject.com/t/how-is-cache-clear-supposed-to-work/44146",
-          "published_at": "2026-02-11T11:16:36+00:00",
-          "priority": 40,
-          "tags": [
-            "code",
-            "cache.clear",
-            "href",
-            "https",
-            "caches",
-            "but",
-            "intented",
-            "have"
-          ],
-          "summary_short": "El artículo plantea un problema con `cache.clear()` en Django cuando se utilizan múltiples caches con diferentes prefijos en la misma base de datos Redis. La función `cache.clear()` inesperadamente elimina todos los caches en la base de datos, lo que sugiere un posible error de diseño o documentación incompleta.",
-          "llm_score": 7
-        },
-        {
-          "id": 197,
-          "topic": "django",
-          "source_id": "django_forum_dev",
-          "title": "I miss Django",
-          "url": "https://forum.djangoproject.com/t/i-miss-django/44138",
-          "published_at": "2026-02-11T02:32:06+00:00",
-          "priority": 40,
-          "tags": [
-            "miss",
-            "django",
-            "moving",
-            "away",
-            "django.",
-            "small",
-            "wanted",
-            "come"
-          ],
-          "summary_short": "El artículo expresa nostalgia por Django al migrar a una pila Go (Gin y Gorm). El autor destaca la calidad de la documentación de Django como un factor clave que extraña.",
-          "llm_score": 7
-        },
-        {
-          "id": 160,
-          "topic": "django",
-          "source_id": "django_security_announcements",
-          "title": "labb - Opensource UI for Django perfectionists with deadlines",
-          "url": "https://forum.djangoproject.com/t/labb-opensource-ui-for-django-perfectionists-with-deadlines/44115",
-          "published_at": "2026-02-10T01:13:37+00:00",
-          "priority": 40,
-          "tags": [
-            "labb",
-            "https",
-            "href",
-            "code",
-            "rel",
-            "noopener",
-            "nofollow",
-            "ugc"
-          ],
-          "summary_short": "labb es una biblioteca de componentes de interfaz de usuario de código abierto construida sobre django-cotton y daisyUI, diseñada para desarrolladores de Django con plazos ajustados. Destaca por su enfoque en el renderizado del lado del servidor, ausencia de dependencias de JavaScript y soporte para flujos de trabajo de desarrollo asistidos por IA.",
-          "llm_score": 7
-        },
-        {
-          "id": 198,
-          "topic": "django",
-          "source_id": "django_forum_dev",
-          "title": "Muhammad Haroon - Contribution Inroduction",
-          "url": "https://forum.djangoproject.com/t/muhammad-haroon-contribution-inroduction/44126",
-          "published_at": "2026-02-10T08:08:57+00:00",
-          "priority": 40,
-          "tags": [
-            "https",
-            "code.djangoproject.com",
-            "wiki",
-            "summerofcode2026",
-            "switchtoplaywrighttestsforintegrationtesting",
-            "haroon",
-            "project",
-            "some"
-          ],
-          "summary_short": "Este artículo presenta a Mohammad Haroon, quien expresa interés en contribuir al proyecto Django durante GSoC 2026, específicamente en la migración a pruebas de integración con Playwright. Busca un mentor para este proyecto.",
-          "llm_score": 4
+          "summary_short": "Erabiltzaile batek Django webguneko inkonsistenta jakitzi du: nagusiak ez dira iluneko modua gordetzen \"Issues\" atalean sartzean, eta estilo bisualei aldaketa jaso dute.",
+          "llm_score": 8.1
         }
       ]
     },
     "ai": {
       "window_days": 7,
-      "since": "2026-02-09T12:54:32.397676+00:00",
-      "until": "2026-02-16T12:54:32.397676+00:00",
+      "since": "2026-02-09T16:48:20.711695+00:00",
+      "until": "2026-02-16T16:48:20.711695+00:00",
       "sections": [
         {
           "name": "industry",
@@ -342,8 +216,8 @@
                 "15x",
                 "faster"
               ],
-              "summary_short": "GPT-5.3-Codex-Spark es un nuevo modelo de codificación en tiempo real que ofrece una velocidad de generación 15 veces mayor y un contexto de 128k. Actualmente está disponible en versión preliminar para usuarios de ChatGPT Pro.",
-              "llm_score": 9
+              "summary_short": "GPT-5.3-Codex-Spark aurkezten dugu, gure lehenengo kode-eredi denbora errealean. 15 aldiz bizkorragoa da, 128k kontekto du eta ChatGPT Pro erabiltzaileentzat ikerketa-aurrerapenetan dago.",
+              "llm_score": 8.5
             },
             {
               "id": 219,
@@ -364,8 +238,8 @@
                 "ryan",
                 "lopopolo"
               ],
-              "summary_short": "El artículo explora el 'Harness engineering', una disciplina para gestionar la ejecución de código generado por modelos de lenguaje como Codex, particularmente en el contexto de agentes de IA. Se centra en la importancia de la infraestructura y las herramientas para desplegar y controlar de forma fiable estos agentes impulsados por IA.",
-              "llm_score": 8
+              "summary_short": "Artikulu honek 'Harness engineering' delakoaren garrantzia azpimarratzen du, Codex AI eragile baten munduan erabiliz. Eragile lehenetsiko sistemetan, garapena bizkortzeko eta automatizatzeko erakundeak nola erabil ditzaketen aditzen du.",
+              "llm_score": 8.1
             }
           ]
         },

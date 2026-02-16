@@ -1,5 +1,6 @@
 services:
   postgres:
+    restart: unless-stopped
     image: postgres:16
     container_name: techwatch_postgres
     environment:
@@ -21,6 +22,7 @@ services:
       - qdrant_data:/qdrant/storage
 
   app:
+    restart: unless-stopped
     build: ./app
     container_name: techwatch_app
     depends_on:

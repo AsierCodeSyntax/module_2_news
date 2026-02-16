@@ -1,37 +1,45 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
-%\usepackage{lmodern}
+% \usepackage[T1]{fontenc} % Lo dejamos comentado por si no tienes instalada la tipografía lmodern
+% \usepackage{lmodern}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{titlesec}
+\usepackage{graphicx} % NUEVO: Paquete para insertar imágenes
 
-% Colores y estilos
+% Le decimos a LaTeX dónde buscar las imágenes
+% pdflatex se ejecuta en app/build, así que subimos un nivel y entramos a src/templates/img
+\graphicspath{{../src/templates/img/}}
+
+% Colores y estilos corporativos
 \definecolor{primary}{RGB}{41, 128, 185}
+\definecolor{darkgray}{RGB}{80, 80, 80}
 \hypersetup{colorlinks=true, linkcolor=primary, urlcolor=primary}
 \titleformat{\section}{\Large\bfseries\color{primary}}{}{0em}{}[\titlerule]
 
-\title{\textbf{TechWatch Weekly Bulletin}}
-\author{Generado automáticamente}
-\date{<< date >>}
-
 \begin{document}
 
-\maketitle
-\thispagestyle{empty}
+% PORTADA PERSONALIZADA CON LOGO DE EMPRESA
+\begin{center}
+    \vspace*{1cm}
+    \includegraphics[width=0.4\textwidth]{CodeSyntaxLogoa.png} \\[1.5cm]
+    {\Huge \textbf{\color{primary}TechWatch Astekaria}} \\[0.5cm]
+    {\Large \textit{Zaintza Teknologikoko Buletina}} \\[1cm]
+    {\large \textbf{Data:} << date >>} \\[1.5cm]
+\end{center}
 
 \begin{abstract}
-Boletín semanal de vigilancia tecnológica. Contiene las noticias más relevantes de la semana curadas y resumidas mediante Inteligencia Artificial.
+\noindent Zaintza teknologikoko asteko buletina. Adimen Artifizialaren bidez laburbildutako eta modu semantikoan sailkatutako azken berriak biltzen ditu, sektoreko joera nagusiak aztertuz.
 \end{abstract}
 
 \vspace{1cm}
 
 <% if topics.plone['items'] %>
-\section*{Noticias del Ecosistema Plone}
+\section*{\includegraphics[height=14pt]{PloneLogoa.png}\hspace{0.4cm}Plone Ekosistemako Berriak}
 \begin{itemize}
 <% for item in topics.plone['items'] %>
-    \item \textbf{<< item.title | escape_tex >>} \hfill \textit{Score: << item.llm_score >>/10} \\
+    \item \textbf{<< item.title | escape_tex >>} \hfill {\color{darkgray}\textit{Garrantzia: << item.llm_score >>/10}} \\
     << item.summary_short | escape_tex >> \\
     {\footnotesize \url{<< item.url | escape_tex >>}} \vspace{0.3cm}
 <% endfor %>
@@ -40,10 +48,10 @@ Boletín semanal de vigilancia tecnológica. Contiene las noticias más relevant
 
 
 <% if topics.django['items'] %>
-\section*{Novedades en Django}
+\section*{\includegraphics[height=14pt]{DjangoLogoa.png}\hspace{0.4cm}Django Berrikuntzak}
 \begin{itemize}
 <% for item in topics.django['items'] %>
-    \item \textbf{<< item.title | escape_tex >>} \hfill \textit{Score: << item.llm_score >>/10} \\
+    \item \textbf{<< item.title | escape_tex >>} \hfill {\color{darkgray}\textit{Garrantzia: << item.llm_score >>/10}} \\
     << item.summary_short | escape_tex >> \\
     {\footnotesize \url{<< item.url | escape_tex >>}} \vspace{0.3cm}
 <% endfor %>
@@ -52,12 +60,12 @@ Boletín semanal de vigilancia tecnológica. Contiene las noticias más relevant
 
 
 <% if topics.ai['sections'] %>
-\section*{Avances en Inteligencia Artificial}
+\section*{\includegraphics[height=14pt]{AALogoa.png}\hspace{0.4cm}Adimen Artifizialeko Aurrerapenak}
 <% for sec in topics.ai['sections'] %>
     \subsection*{<< sec.name | capitalize >>}
     \begin{itemize}
     <% for item in sec['items'] %>
-        \item \textbf{<< item.title | escape_tex >>} \hfill \textit{Score: << item.llm_score >>/10} \\
+        \item \textbf{<< item.title | escape_tex >>} \hfill {\color{darkgray}\textit{Garrantzia: << item.llm_score >>/10}} \\
         << item.summary_short | escape_tex >> \\
         {\footnotesize \url{<< item.url | escape_tex >>}} \vspace{0.3cm}
     <% endfor %>

@@ -2,14 +2,13 @@ import os
 import json
 import subprocess
 import re
+import shutil  # <-- NUEVO IMPORT PARA COPIAR ARCHIVOS
 from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 
 def escape_latex(s: str) -> str:
-    """Escapa caracteres especiales de LaTeX para evitar errores de compilación."""
     if not s:
         return ""
-    # Caracteres especiales: & % $ # _ { } ~ ^ \
     s = s.replace('\\', '\\textbackslash{}')
     s = re.sub(r'([&%$#_{}])', r'\\\1', s)
     s = s.replace('~', '\\textasciitilde{}')
@@ -28,7 +27,6 @@ def main():
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    # Configuramos Jinja2 para que no choque con las llaves de LaTeX
     env = Environment(
         loader=FileSystemLoader(template_dir),
         block_start_string='<%',
@@ -40,27 +38,20 @@ def main():
         trim_blocks=True,
         autoescape=False
     )
-    
-    # Añadimos el filtro personalizado de LaTeX
     env.filters['escape_tex'] = escape_latex
 
     template = env.get_template("bulletin.tex")
-    
-    # Preparamos la fecha en formato legible
-    gen_date = datetime.fromisoformat(data["generated_at"]).strftime("%d de %B, %Y")
+    gen_date = datetime.fromisoformat(data["generated_at"]).strftime("%Y-%m-%d")
 
-    # Renderizamos la plantilla con los datos
     tex_content = template.render(
         topics=data.get("topics", {}),
         date=gen_date
     )
 
-    # Guardamos el .tex
     with open(tex_out_path, "w", encoding="utf-8") as f:
         f.write(tex_content)
     print(f"✅ Archivo LaTeX generado en: {tex_out_path}")
 
-    # Compilamos el PDF usando pdflatex
     print("Compilando PDF con LaTeX...")
     try:
         subprocess.run(
@@ -69,7 +60,17 @@ def main():
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
-        print(f"🎉 ¡Éxito! PDF generado en: {os.path.join(build_dir, 'bulletin_compiled.pdf')}")
+        pdf_out = os.path.join(build_dir, 'bulletin_compiled.pdf')
+        print(f"🎉 ¡Éxito! PDF generado en: {pdf_out}")
+        
+        # --- SISTEMA DE ARCHIVO (BACKUPS) ---
+        archive_dir = os.path.join(build_dir, "archive")
+        os.makedirs(archive_dir, exist_ok=True)
+        backup_path = os.path.join(archive_dir, f"bulletin_{gen_date}.pdf")
+        
+        shutil.copy2(pdf_out, backup_path)
+        print(f"💾 Copia de seguridad guardada para el histórico en: {backup_path}")
+        
     except subprocess.CalledProcessError as e:
         print("❌ Error al compilar el PDF. Revisa los logs de LaTeX.")
         print(e.stdout.decode('utf-8', errors='ignore'))

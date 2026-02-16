@@ -7,8 +7,8 @@ import requests
 WORKSPACE_DIR = "/workspace"
 
 def trigger_n8n_webhook():
-    #webhook_url = "http://n8n:5678/webhook/enviar-boletin"
-    webhook_url = "http://n8n:5678/webhook-test/enviar-boletin"
+    webhook_url = "http://n8n:5678/webhook/enviar-boletin"
+    #webhook_url = "http://n8n:5678/webhook-test/enviar-boletin"
     print(f"🔔 Avisando a n8n en {webhook_url}...")
     try:
         response = requests.post(webhook_url)
