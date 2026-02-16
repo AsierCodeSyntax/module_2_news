@@ -38,7 +38,8 @@ services:
     volumes:
       - ./:/workspace
     working_dir: /workspace
-    command: ["bash"]
+    command: ["python", "app/src/scheduler.py"]
+    #command: ["bash"]
 
   adminer:
     image: adminer:latest
@@ -52,7 +53,7 @@ services:
   n8n:
     image: n8nio/n8n:latest
     container_name: techwatch_n8n
-    profiles: ["automation"]   # <-- NO se levanta salvo que lo actives
+    #profiles: ["automation"]   # <-- NO se levanta salvo que lo actives
     depends_on:
       - postgres
     ports:
@@ -70,6 +71,7 @@ services:
       - GENERIC_TIMEZONE=Europe/Madrid
     volumes:
       - n8n_data:/home/node/.n8n
+      - ./app/build:/home/node/.n8n-files/build
 
 volumes:
   pg_data:

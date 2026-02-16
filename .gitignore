@@ -1,3 +1,4 @@
 .env
 /app/build
+/app/backups
 run_pipeline.sh
