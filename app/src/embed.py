@@ -38,17 +38,24 @@ def process_batch(conn, qdrant, model, rows):
                 match = matches[0]
                 original_id = match.payload.get("item_id")
                 
-                # ¿Es un desmentido/actualización?
+                # Consultamos qué tipo de fuente y qué nota tenía la noticia original
+                cur.execute("SELECT source_type, COALESCE(llm_score, 0.0), cluster_count FROM items WHERE id=%s", (original_id,))
+                orig_data = cur.fetchone()
+                
+                if not orig_data:
+                    continue # Por seguridad, si no existe saltamos
+                    
+                orig_source_type, orig_score, orig_cluster = orig_data
+                
+                # CASO 1: ¿Es un desmentido/actualización?
                 if CORRECTION_KEYWORDS.search(title):
                     print(f"[{topic}] 🚨 CORRECCIÓN/DESMENTIDO detectado: '{title[:40]}...'")
                     
-                    # Penalizamos MUCHO a la noticia original (-5 puntos)
                     cur.execute(
-                        "UPDATE items SET llm_score = llm_score - 5.0 WHERE id=%s",
+                        "UPDATE items SET llm_score = GREATEST(0.0, llm_score - 5.0) WHERE id=%s",
                         (original_id,)
                     )
                     
-                    # Y dejamos pasar esta nueva noticia como original para que el LLM la resuma
                     new_qdrant_id = str(uuid.uuid4())
                     qdrant.upsert(
                         collection_name=COLLECTION_NAME,
@@ -58,14 +65,44 @@ def process_batch(conn, qdrant, model, rows):
                     embedded_count += 1
                     corrections_found += 1
                     
+                # CASO 2: TRANSFERENCIA DE AUTORIDAD (Oficial vs Comunidad)
+                elif source_type == 'official' and orig_source_type != 'official':
+                    print(f"[{topic}] 👑 AUTORIDAD OFICIAL: '{title[:35]}...' absorbe al rumor anterior.")
+                    
+                    # 1. Degradamos la vieja a duplicado
+                    cur.execute("UPDATE items SET status='duplicate' WHERE id=%s", (original_id,))
+                    
+                    # 2. La oficial hereda los puntos (con un tope de 10) y el conteo de duplicados
+                    new_score = min(orig_score + 1.0, 10.0)
+                    new_cluster = orig_cluster + 1
+                    
+                    cur.execute(
+                        """
+                        UPDATE items 
+                        SET llm_score=%s, cluster_count=%s 
+                        WHERE id=%s
+                        """,
+                        (new_score, new_cluster, item_id)
+                    )
+                    
+                    # 3. Insertamos la oficial en Qdrant como la nueva reina
+                    new_qdrant_id = str(uuid.uuid4())
+                    qdrant.upsert(
+                        collection_name=COLLECTION_NAME,
+                        points=[PointStruct(id=new_qdrant_id, vector=vector, payload={"item_id": item_id, "topic": topic})]
+                    )
+                    cur.execute("UPDATE items SET qdrant_id=%s WHERE id=%s", (new_qdrant_id, item_id))
+                    embedded_count += 1
+                    duplicates_found += 1
+
+                # CASO 3: Es un simple "eco" (Tendencia normal)
                 else:
-                    # Es un simple "eco" (Tendencia). 
                     print(f"[{topic}] 📈 Tendencia (Eco): '{title[:40]}...' suma puntos al original.")
                     
                     # Marcamos la nueva como duplicada
                     cur.execute("UPDATE items SET status='duplicate' WHERE id=%s", (item_id,))
                     
-                    # Sumamos +1.0 al original, y aumentamos su cluster_count
+                    # Sumamos +1.0 al original
                     cur.execute(
                         """
                         UPDATE items 
@@ -77,7 +114,7 @@ def process_batch(conn, qdrant, model, rows):
                     )
                     duplicates_found += 1
             else:
-                # Es 100% original, lo subimos a Qdrant
+                # CASO 4: Es 100% original
                 new_qdrant_id = str(uuid.uuid4())
                 qdrant.upsert(
                     collection_name=COLLECTION_NAME,
@@ -88,7 +125,6 @@ def process_batch(conn, qdrant, model, rows):
 
     conn.commit()
     return embedded_count, duplicates_found, corrections_found
-
 
 def main():
     db_url = os.environ.get("DATABASE_URL")
