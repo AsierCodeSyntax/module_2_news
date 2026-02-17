@@ -117,7 +117,9 @@ def main():
                         cur.execute(
                             """
                             UPDATE items 
-                            SET summary_short=%s, llm_score=%s, status='evaluated' 
+                            SET summary_short=%s, 
+                                llm_score = GREATEST(0.0, LEAST(COALESCE(llm_score, 0.0) + %s, 10.0)), 
+                                status='evaluated' 
                             WHERE id=%s
                             """,
                             (summary, score, item_id)
