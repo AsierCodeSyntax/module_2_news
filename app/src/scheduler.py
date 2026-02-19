@@ -36,10 +36,9 @@ def daily_pipeline():
     # 2. Ingestas Scraping (Noticias oficiales)
     run_command(["python", "app/src/ingest_scrape.py", "--topic", "plone"])
     
-    # 3. Enriquecimiento, Qdrant y LLM
+    # 3. Enriquecimiento y Agentes IA
     run_command(["python", "app/src/enrich.py"])
-    run_command(["python", "app/src/embed.py"])
-    run_command(["python", "app/src/evaluate_llm.py"])
+    run_command(["python", "app/src/process_news.py"]) # <--- Nuesto nuevo Orquestador
     
     print(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] PIPELINE DIARIO COMPLETADO.")
 

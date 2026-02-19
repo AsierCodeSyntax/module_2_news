@@ -9,3 +9,5 @@ jinja2
 sentence-transformers
 google-generativeai
 schedule
+langgraph
+langchain-core
