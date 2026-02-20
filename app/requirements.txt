@@ -4,10 +4,14 @@ beautifulsoup4
 trafilatura
 psycopg[binary]
 pyyaml
-qdrant-client
+qdrant-client==1.14.1
 jinja2
 sentence-transformers
 google-generativeai
 schedule
-langgraph
-langchain-core
+duckduckgo-search>=6.1.1
+langchain-core>=0.2.0
+langchain-community>=0.2.0
+langchain-openai>=0.1.0
+langchain-google-genai>=1.0.0
+langgraph>=0.2.0

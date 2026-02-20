@@ -1,115 +1,91 @@
 import os
-import requests
-import google.generativeai as genai
+from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.graph import END
+from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 
-# Import the global state
 from .state import OverallState
 
-# Define the available workers (departments)
 MEMBERS = ["Scout", "Analyst", "Translator", "Publisher"]
 
-# System prompt forcing strict routing behavior
 SUPERVISOR_PROMPT = """
-You are a Supervisor managing the following workers: {members}.
-Your job is to read the conversation and decide who should act next.
+Eres el Supervisor (Orquestador). Tu trabajo es leer el historial de la conversación y decidir a qué trabajador llamar a continuación.
+Tus trabajadores son: {members}.
 
-Routing options:
-1. If you need to search for news or update RSS feeds -> call 'Scout'.
-2. If there are raw news items that need technical evaluation -> call 'Analyst'.
-3. If there are technical evaluations that need to be translated to Euskera -> call 'Translator'.
-4. If everything is translated and it's time to generate the PDF or send emails -> call 'Publisher'.
-5. If the main task is completely finished or there is nothing else to do -> respond 'FINISH'.
+REGLAS DE ENRUTAMIENTO:
+1. Si la petición requiere descargar o ingestar noticias y aún no se ha hecho -> responde 'Scout'.
+2. Si el Scout ya terminó su ingesta y hay noticias pendientes de evaluar -> responde 'Analyst'.
+3. Si el Analista ya evaluó y hay textos pendientes de traducir -> responde 'Translator'.
+4. Si el Traductor ya terminó, REVISA LA PETICIÓN INICIAL. Si el usuario pidió generar un boletín o PDF, responde 'Publisher'. Si NO pidió generar PDF, responde 'FINISH'.
+5. Si el Publisher ya generó el PDF con éxito -> responde 'FINISH'.
 
-CRITICAL INSTRUCTION: Respond ONLY with the exact name of the worker or 'FINISH'. Do not add any extra text, punctuation, or explanation.
+INSTRUCCIÓN CRÍTICA: Responde ÚNICAMENTE con una de estas palabras: Scout, Analyst, Translator, Publisher o FINISH. No añadas puntos, explicaciones, ni comillas.
 """
 
-def supervisor_node(state: OverallState) -> dict:
-    """
-    Supervisor node: reads the message history and decides the next step.
-    Acts as the main router in the hierarchical graph.
-    """
-    print("👔 [Supervisor] Thinking about the next delegation...")
+def get_supervisor_llm():
+    """Instancia el LLM basándose en el archivo .env"""
+    provider = os.environ.get("SUPERVISOR_PROVIDER", os.environ.get("LLM_PROVIDER", "ollama")).lower()
     
-    messages = state.get("messages", [])
+    if provider == "ollama":
+        base_url = os.environ.get("OLLAMA_API_URL", "http://ollama:11434").replace("/api", "") + "/v1"
+        return ChatOpenAI(
+            base_url=base_url,
+            api_key=os.environ.get("OLLAMA_API_KEY", "ollama"),
+            model=os.environ.get("SUPERVISOR_MODEL", os.environ.get("OLLAMA_MODEL", "gemma3:12b-cloud"))
+        )
+    else:
+        return ChatGoogleGenerativeAI(
+            model="gemini-2.0-flash", 
+            google_api_key=os.environ.get("GEMINI_API_KEY")
+        )
+
+def supervisor_node(state: OverallState) -> dict:
+    """Nodo del Supervisor de LangGraph"""
+    print("👔 [Supervisor] Leyendo historial y decidiendo el siguiente paso...")
+    
+    # 1. Preparamos las instrucciones
     system_prompt = SUPERVISOR_PROMPT.format(members=", ".join(MEMBERS))
     
-    # Read the provider from the .env file
-    provider = os.environ.get("SUPERVISOR_PROVIDER", "ollama").lower()
+    # 2. BLINDAJE: Convertimos el historial complejo de LangChain en texto plano limpio.
+    # Esto evita que Gemini se cuelgue por culpa de formatos extraños o "tool_calls" alucinados.
+    raw_messages = state.get("messages", [])
+    history_text = "HISTORIAL DE ACCIONES:\n"
     
-    # Build the conversation history for the prompt
-    chat_history = f"Instructions: {system_prompt}\n\nHistory:\n"
-    for msg in messages:
-        chat_history += f"{msg.type}: {msg.content}\n"
+    if not raw_messages:
+        history_text += "No hay acciones previas."
+    else:
+        for msg in raw_messages:
+            # Ponemos el tipo de mensaje y su contenido textual
+            history_text += f"[{msg.type.upper()}]: {msg.content}\n"
+            
+    # 3. Creamos un único mensaje seguro para el LLM
+    final_messages = [
+        SystemMessage(content=system_prompt),
+        HumanMessage(content=history_text)
+    ]
     
-    decision = "FINISH" # Default fallback
+    llm = get_supervisor_llm()
     
     try:
-        if provider == "gemini":
-            # Gemini implementation
-            api_key = os.environ.get("GEMINI_API_KEY")
-            genai.configure(api_key=api_key)
-            model = genai.GenerativeModel("gemini-2.0-flash")
-            
-            response = model.generate_content(chat_history)
-            decision = response.text.strip().replace("'", "").replace('"', "")
-            
-        elif provider == "ollama":
-            # Ollama implementation
-            url = os.environ.get("OLLAMA_API_URL")
-            model_name = os.environ.get("SUPERVISOR_MODEL", "gemma3:12b-cloud")
-            api_key = os.environ.get("OLLAMA_API_KEY", "")
-            
-            if not url:
-                raise ValueError("OLLAMA_API_URL is not set in .env")
-                
-            headers = {}
-            if api_key and api_key != "Secreto":
-                headers["Authorization"] = f"Bearer {api_key}"
-                
-            payload = {
-                "model": model_name,
-                "prompt": chat_history,
-                "stream": False
-            }
-            
-            # Handle API endpoint formatting
-            base_url = url.rstrip('/')
-            endpoint = f"{base_url}/generate" if base_url.endswith("/api") else f"{base_url}/api/generate"
-            
-            response = requests.post(endpoint, json=payload, headers=headers)
-            response.raise_for_status()
-            
-            data = response.json()
-            # Clean up the response to ensure we only get the agent name
-            raw_text = data.get("response", "").strip()
-            decision = raw_text.replace("'", "").replace('"', "").split("\n")[0].strip()
-            
-        else:
-            print(f"⚠️ [Supervisor] Unknown provider: {provider}")
-            
+        response = llm.invoke(final_messages)
+        # Limpiamos exhaustivamente la respuesta
+        decision = response.content.strip().replace("'", "").replace('"', "").replace(".", "").split("\n")[0].strip()
     except Exception as e:
-        print(f"❌ [Supervisor] Error during LLM call: {e}")
-        # If the LLM fails, we finish the execution to avoid infinite loops
+        print(f"❌ [Supervisor] Error llamando al LLM: {e}")
         decision = "FINISH"
 
-    # Ensure the decision is exactly one of the allowed members or FINISH
     valid_decisions = MEMBERS + ["FINISH"]
     
-    # Clean match (in case the LLM adds a period at the end)
+    # Comprobación de seguridad para encajar la palabra exacta
+    final_decision = "FINISH" # Por defecto
     for valid in valid_decisions:
-        if valid.lower() in decision.lower():
-            decision = valid
+        if valid.upper() in decision.upper():
+            final_decision = valid
             break
             
-    if decision not in valid_decisions:
-        print(f"⚠️ [Supervisor] Invalid output from LLM: '{decision}'. Forcing FINISH.")
-        decision = "FINISH"
-
-    print(f"👔 [Supervisor] Decision made -> {decision}")
-    
-    # LangGraph special signal to terminate the workflow
-    if decision == "FINISH":
+    if final_decision == "FINISH":
+        print("👔 [Supervisor] Decisión tomada -> Proceso terminado (FINISH).")
         return {"next_agent": END}
     
-    return {"next_agent": decision}
+    print(f"👔 [Supervisor] Decisión tomada -> Delegando en: {final_decision}")
+    return {"next_agent": final_decision}

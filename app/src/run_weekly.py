@@ -1,0 +1,14 @@
+from langchain_core.messages import HumanMessage
+from agents.main_graph import main_graph
+
+def main():
+    print("🗞️ [Weekly] Iniciando generación del Boletín...")
+    prompt = "Las noticias ya están traducidas. Ejecuta ÚNICAMENTE al Publisher para generar el PDF."
+    initial_state = {"messages": [HumanMessage(content=prompt)], "next_agent": "", "errors": []}
+    
+    for event in main_graph.stream(initial_state, {"recursion_limit": 50}):
+        pass
+    print("✅ Boletín semanal generado.")
+
+if __name__ == "__main__":
+    main()
