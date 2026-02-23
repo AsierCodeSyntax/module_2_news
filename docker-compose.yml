@@ -37,6 +37,10 @@ services:
       OLLAMA_API_URL: "${OLLAMA_API_URL}"
       OLLAMA_API_KEY: "${OLLAMA_API_KEY}"
       OLLAMA_MODEL: "${OLLAMA_MODEL}"
+      LANGCHAIN_TRACING_V2: "true"
+      LANGCHAIN_ENDPOINT: "https://eu.api.smith.langchain.com"
+      LANGCHAIN_API_KEY: "${LANGCHAIN_API_KEY}"
+      LANGCHAIN_PROJECT: "${LANGCHAIN_PROJECT}"
     volumes:
       - ./:/workspace
     working_dir: /workspace

@@ -13,7 +13,7 @@ def translator_node(state: OverallState) -> dict:
     
     with psycopg.connect(db_url) as conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT id, title, summary_short FROM items WHERE status='evaluated' ORDER BY fetched_at DESC LIMIT 1")
+            cur.execute("SELECT id, title, summary_short FROM items WHERE status='evaluated' ORDER BY fetched_at DESC LIMIT 100")
             rows = cur.fetchall()
             
             for item_id, title, summary in rows:

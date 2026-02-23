@@ -25,7 +25,7 @@ def publisher_node(state: OverallState) -> dict:
     with psycopg.connect(db_url) as conn:
         with conn.cursor() as cur:
             # 1. Top 5 Plone
-            cur.execute("SELECT id, title, summary_short, url, llm_score FROM items WHERE topic='plone' AND status='translated' ORDER BY llm_score DESC LIMIT 5")
+            cur.execute("SELECT id, title, summary_short, url, llm_score FROM items WHERE topic='plone' AND status='translated' ORDER BY llm_score DESC LIMIT 100")
             for r in cur.fetchall():
                 news_data["topics"]["plone"]["items"].append({"id": r[0], "title": r[1], "summary_short": r[2], "url": r[3], "llm_score": r[4]})
                 all_ids.append(r[0])

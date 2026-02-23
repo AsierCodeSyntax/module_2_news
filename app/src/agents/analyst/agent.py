@@ -29,7 +29,7 @@ def analyst_node(state: OverallState) -> dict:
     with psycopg.connect(db_url) as conn:
         with conn.cursor() as cur:
             # Añadimos source_type a la consulta para tu regla de autoridad
-            cur.execute("SELECT id, topic, title, coalesce(content_text,''), source_type FROM items WHERE status='ready' AND qdrant_id IS NULL ORDER BY fetched_at DESC LIMIT 1")
+            cur.execute("SELECT id, topic, title, coalesce(content_text,''), source_type FROM items WHERE status='ready' AND qdrant_id IS NULL ORDER BY fetched_at DESC LIMIT 100")
             rows = cur.fetchall()
             
             for item_id, topic, title, content_text, source_type in rows:
