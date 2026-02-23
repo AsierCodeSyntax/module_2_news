@@ -126,8 +126,58 @@ def extract_best_text(entry: Any) -> str:
 
 
 def load_sources_yaml(path: str) -> Dict[str, Any]:
-    with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+    """Carga el sources.yaml principal y lo fusiona con sources_ia.yaml si existe."""
+    # 1. Cargar el principal (sources.yaml)
+    if not os.path.exists(path):
+        print(f"⚠️ Archivo principal no encontrado: {path}")
+        fuentes_totales = {"topics": {}}
+    else:
+        with open(path, "r", encoding="utf-8") as f:
+            fuentes_totales = yaml.safe_load(f) or {"topics": {}}
+
+    # 2. Cargar el de la IA (sources_ia.yaml)
+    # Asumimos que está en el mismo directorio que el principal
+    base_dir = os.path.dirname(os.path.abspath(path))
+    ia_path = os.path.join(base_dir, "sources_ia.yaml")
+
+    if os.path.exists(ia_path):
+        print(f"🤖 [Ingest] Fusionando fuentes descubiertas por la IA desde: {ia_path}")
+        with open(ia_path, "r", encoding="utf-8") as f:
+            fuentes_ia = yaml.safe_load(f) or {}
+
+        # Fusionar los temas (topics)
+        for topic, contenido in fuentes_ia.items():
+            # Asegurar estructura en el diccionario principal
+            if "topics" not in fuentes_totales:
+                fuentes_totales["topics"] = {}
+            if topic not in fuentes_totales["topics"]:
+                fuentes_totales["topics"][topic] = {"sources": []}
+            if "sources" not in fuentes_totales["topics"][topic]:
+                fuentes_totales["topics"][topic]["sources"] = []
+
+            # Extraer URLs ya existentes para evitar duplicados
+            urls_existentes = {
+                s.get("url") for s in fuentes_totales["topics"][topic]["sources"]
+            }
+
+            # Añadir fuentes de la IA (vienen en formato reducido, las expandimos)
+            if "rss" in contenido:
+                for rss_ia in contenido["rss"]:
+                    url_ia = rss_ia.get("url")
+                    if url_ia and url_ia not in urls_existentes:
+                        # Convertimos el formato simple del Scout al formato complejo de ingest.py
+                        nueva_fuente = {
+                            "id": f"ia_{hashlib.md5(url_ia.encode()).hexdigest()[:8]}",
+                            "name": rss_ia.get("name", "IA Discovery"),
+                            "url": url_ia,
+                            "type": "rss",
+                            "enabled": True,
+                            "tags": ["ia_discovered", topic]
+                        }
+                        fuentes_totales["topics"][topic]["sources"].append(nueva_fuente)
+                        print(f"   + Nueva fuente IA añadida: {url_ia}")
+
+    return fuentes_totales
 
 
 def iter_topic_sources(cfg: Dict[str, Any], topic: str) -> Iterable[Dict[str, Any]]:
