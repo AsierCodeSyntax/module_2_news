@@ -12,6 +12,7 @@ def main():
     2. Analizad las noticias pendientes (descartando duplicados y puntuando las nuevas).
     3. Traducid los análisis al euskera.
     4. Genera el PDF final.
+    5. Envía el PDF por correo electrónico a la dirección fijada.
     """
     
     initial_state = {

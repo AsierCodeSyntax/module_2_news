@@ -56,7 +56,7 @@ def generate_pdf_tool(news_data: dict) -> str:
         if os.path.exists(pdf_build_path):
             import shutil
             shutil.move(pdf_build_path, pdf_final_path)
-            return f"✅ Boletín PDF generado con éxito en archive/{pdf_filename}"
+            return f"✅ Éxito. Usa exactamente esta ruta del archivo para enviarlo: {pdf_final_path}"
         else:
             # Si no existe, entonces sí que fue un error fatal
             log_error = result.stdout.decode('utf-8', errors='ignore')[-300:]

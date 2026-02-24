@@ -56,30 +56,30 @@ services:
       - postgres
 
 
-  n8n:
-    image: n8nio/n8n:latest
-    container_name: techwatch_n8n
-    #profiles: ["automation"]   # <-- NO se levanta salvo que lo actives
-    depends_on:
-      - postgres
-    ports:
-      - "5678:5678"
-    environment:
-      - N8N_HOST=localhost
-      - N8N_PORT=5678
-      - N8N_PROTOCOL=http
-      - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_HOST=postgres
-      - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_DATABASE=techwatch
-      - DB_POSTGRESDB_USER=techwatch
-      - DB_POSTGRESDB_PASSWORD=techwatch
-      - GENERIC_TIMEZONE=Europe/Madrid
-    volumes:
-      - n8n_data:/home/node/.n8n
-      - ./app/build:/home/node/.n8n-files/build
+  # n8n:
+  #   image: n8nio/n8n:latest
+  #   container_name: techwatch_n8n
+  #   #profiles: ["automation"]   # <-- NO se levanta salvo que lo actives
+  #   depends_on:
+  #     - postgres
+  #   ports:
+  #     - "5678:5678"
+  #   environment:
+  #     - N8N_HOST=localhost
+  #     - N8N_PORT=5678
+  #     - N8N_PROTOCOL=http
+  #     - DB_TYPE=postgresdb
+  #     - DB_POSTGRESDB_HOST=postgres
+  #     - DB_POSTGRESDB_PORT=5432
+  #     - DB_POSTGRESDB_DATABASE=techwatch
+  #     - DB_POSTGRESDB_USER=techwatch
+  #     - DB_POSTGRESDB_PASSWORD=techwatch
+  #     - GENERIC_TIMEZONE=Europe/Madrid
+  #   volumes:
+  #     - n8n_data:/home/node/.n8n
+  #     - ./app/build:/home/node/.n8n-files/build
 
 volumes:
   pg_data:
   qdrant_data:
-  n8n_data:
+  # n8n_data:

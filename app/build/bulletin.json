@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-02-16T16:48:20.711729+00:00",
+  "generated_at": "2026-02-23T14:29:31.499375+00:00",
   "topics": {
     "plone": {
       "window_days": 14,
-      "since": "2026-02-02T16:48:20.711695+00:00",
-      "until": "2026-02-16T16:48:20.711695+00:00",
+      "since": "2026-02-09T14:29:31.499341+00:00",
+      "until": "2026-02-23T14:29:31.499341+00:00",
       "items": [
         {
-          "id": 1,
+          "id": 11867,
           "topic": "plone",
           "source_id": "plone_forum_announcements",
           "title": "Plone Foundation's 2025 financial statements and 2026 budget are now published",
@@ -26,11 +26,11 @@
             "emoji",
             "href"
           ],
-          "summary_short": "Plone Foundation-ek 2025eko finantza-egoeraren txostenak eta 2026ko aurrekontua argitaratu ditu. Komunitatearen indarra eta jasangarritasuna erakusten du, babesle eta dohaintza bidez.",
-          "llm_score": 8.1
+          "summary_short": "Plone Fundazioaren 2025eko finantza egoerak eta 2026ko aurrekontua argitaratu dira. Dirulaguntzak eta dohaintzak arduraz erabiltzen dira, komunitatearen indarra eta jasangarritasuna erakutsiz.",
+          "llm_score": 8.5
         },
         {
-          "id": 2,
+          "id": 11868,
           "topic": "plone",
           "source_id": "plone_forum_announcements",
           "title": "Marketing Team Meeting Notes – 2026-02-10 (15:00 UTC)",
@@ -49,197 +49,240 @@
             "next",
             "feb"
           ],
-          "summary_short": "Biltzar honetan, Plone-ren marketing estrategia aztertzen da, webguneko berritzeak, konferentziaren antolaketa eta komunitatearen lankidetza sustatzeko ekintzak barne hartzen ditu. Finantza-gardentasuna, sponsorren ikusgarritasuna eta World Plone Day-ko ekintzak ere azpimarratzen dira.",
-          "llm_score": 7.8
-        },
-        {
-          "id": 3,
-          "topic": "plone",
-          "source_id": "plone_forum_announcements",
-          "title": "Volto Team meeting minutes 2026-02-10",
-          "url": "https://community.plone.org/t/volto-team-meeting-minutes-2026-02-10/22828",
-          "published_at": "2026-02-10T11:01:58+00:00",
-          "priority": 40,
-          "tags": [
-            "community",
-            "announcement",
-            "href",
-            "https",
-            "volto",
-            "class",
-            "community.plone.org",
-            "anchor",
-            "name",
-            "plone"
-          ],
-          "summary_short": "Minutu-biltzarrak Volto taldearen lanbideak lantzen ditu, hala nola, plone.org-en egutegia, nabigazio-izenak, taulak itsatsiz konpontzea eta Volto 19aren amaiera. Playwright-ren probak ere aztertu ziren.",
+          "summary_short": "Plone Marketin taldearen bilera-oharrak, hainbat gai jorratuz: plone.org berritzea, kasu praktikoak, 2026ko Plone Konferentzia, eta finantza gardentasun iragarpena. Hurrengo bilera otsailaren 24an izango da.",
           "llm_score": 7.8
         }
       ]
     },
     "django": {
       "window_days": 7,
-      "since": "2026-02-09T16:48:20.711695+00:00",
-      "until": "2026-02-16T16:48:20.711695+00:00",
+      "since": "2026-02-16T14:29:31.499341+00:00",
+      "until": "2026-02-23T14:29:31.499341+00:00",
       "items": [
         {
-          "id": 193,
-          "topic": "django",
-          "source_id": "django_forum_dev",
-          "title": "Request to mention to **not** use QueryDict in unittest Client.post",
-          "url": "https://forum.djangoproject.com/t/request-to-mention-to-not-use-querydict-in-unittest-client-post/44179",
-          "published_at": "2026-02-13T09:04:36+00:00",
-          "priority": 40,
-          "tags": [
-            "class",
-            "div",
-            "querydict",
-            "code",
-            "https",
-            "client.post",
-            "pre",
-            "use"
-          ],
-          "summary_short": "Artikulu honek `QueryDict`-en erabilerari buruzko ohar bat gehitu behar dela proposatzen du Django-ren `Client.post` dokumentazioan. `QueryDict`-en `__getitem__` metodoak zerrendako azken elementua bakarrik itzultzen duela azalduko luke, forma-datuak bidaltzean arazoak eragin ditzakeelarik.",
-          "llm_score": 8.2
-        },
-        {
-          "id": 159,
-          "topic": "django",
-          "source_id": "django_security_announcements",
-          "title": "La Suite Numerique",
-          "url": "https://forum.djangoproject.com/t/la-suite-numerique/44127",
-          "published_at": "2026-02-10T08:35:17+00:00",
-          "priority": 40,
-          "tags": [
-            "class",
-            "https",
-            "div",
-            "suite",
-            "href",
-            "aside",
-            "header",
-            "img"
-          ],
-          "summary_short": "Hona hemen Django erabiliz NextCloud edo Google Drive bezalako sistema bat eraiki nahi duen gizon baten esperientzia. Suitenumerique proiektua deskribatzen du, Frantziako gobernuak garatutako Django-ren bertsio bat, eta intereseko beste tresna bat ere aurkezten du.",
-          "llm_score": 8.2
-        },
-        {
-          "id": 183,
+          "id": 11884,
           "topic": "django",
           "source_id": "django_news_newsletter",
-          "title": "Django News - The Post-Heroku Django World - Feb 13th 2026",
-          "url": "https://django-news.com/issues/324",
-          "published_at": "2026-02-13T11:00:00+00:00",
+          "title": "Django News - Contributor Covenant, Security Team Expansion, and Django 6.1 Updates - Feb 20th 2026",
+          "url": "https://django-news.com/issues/325",
+          "published_at": "2026-02-20T11:00:00+00:00",
           "priority": 100,
           "tags": [
             "https",
             "href",
             "rss",
             "cur.at",
-            "django",
             "code",
+            "django",
             "python",
-            "report"
+            "news"
           ],
-          "summary_short": "Artikulu honek Django proiektuko berriak biltzen ditu, 2026ko otsailaren 13ko data duena.  Steering Council-en urteko bilarrera, Read the Docs-eko bilaketa hobekuntzak, Python 3.15.0aren bertsio berria, eta Wagtail CMS sari izenpetzeak aipatu dira.",
-          "llm_score": 8.1
+          "summary_short": "Django News-en azken berriak: Contributor Covenant kode-gidalerro berria, segurtasun taldearen hedapena eta Django 6.1-en eguneraketak, besteak beste. Wagtail CMS-ren integrazioak ere aipatzen dira.",
+          "llm_score": 7.8
         },
         {
-          "id": 113,
+          "id": 11885,
           "topic": "django",
-          "source_id": "django_official_weblog",
-          "title": "Django Steering Council 2025 Year in Review",
-          "url": "https://www.djangoproject.com/weblog/2026/feb/11/steering-council-2025-year-in-review/",
-          "published_at": "2026-02-11T14:44:22+00:00",
-          "priority": 60,
+          "source_id": "django_security_announcements",
+          "title": "django-xbench update: slow endpoint aggregation and lightweight performance monitoring",
+          "url": "https://forum.djangoproject.com/t/django-xbench-update-slow-endpoint-aggregation-and-lightweight-performance-monitoring/44252",
+          "published_at": "2026-02-22T10:45:03+00:00",
+          "priority": 55,
           "tags": [
-            "django",
-            "steering",
-            "council",
-            "have",
-            "been",
-            "process",
-            "href",
+            "django-xbench",
+            "slow",
+            "performance",
+            "lightweight",
+            "small",
+            "full",
+            "endpoints",
             "https"
           ],
-          "summary_short": "Steering Council de Django 2025eko lana laburtzen du, DEP 10aren prozesua sinplifikatzea, funts berriak GitHub-en kudeatzea eta komunitatearen ekosistema hobetzea ahalbidetzean arreta berezia jarriz.",
-          "llm_score": 8.1
+          "summary_short": "Django-xbench middleware berria aurkeztu da, endpoint motelak detektatzeko eta errendimendua kontrolatzeko. APM tresna osoak behar ez direnean erabilgarria.",
+          "llm_score": 7.8
         },
         {
-          "id": 195,
+          "id": 11870,
           "topic": "django",
           "source_id": "django_forum_dev",
-          "title": "Dark mode inconsistency between main site and Issues section",
-          "url": "https://forum.djangoproject.com/t/dark-mode-inconsistency-between-main-site-and-issues-section/44150",
-          "published_at": "2026-02-11T11:54:55+00:00",
+          "title": "GSoC 2026 – Playwright Testing Migration Introduction (AxraMj)",
+          "url": "https://forum.djangoproject.com/t/gsoc-2026-playwright-testing-migration-introduction-axramj/44260",
+          "published_at": "2026-02-23T08:56:43+00:00",
           "priority": 40,
           "tags": [
+            "django",
+            "tests",
+            "playwright",
+            "testing",
+            "axramj",
             "href",
             "https",
-            "div",
-            "class",
-            "us1.discourse-cdn.com",
-            "flex026",
-            "uploads",
-            "djangoproject"
+            "gsoc-playwright-tests"
           ],
-          "summary_short": "Erabiltzaile batek Django webguneko inkonsistenta jakitzi du: nagusiak ez dira iluneko modua gordetzen \"Issues\" atalean sartzean, eta estilo bisualei aldaketa jaso dute.",
-          "llm_score": 8.1
+          "summary_short": "Akshara izeneko ikasleak Django proiekturako GSoC 2026 programan parte hartzeko asmoa du, Selenium testak Playwright-ekin ordezkatuz integrazio probak hobetzeko. Dagoeneko lan batzuk egin ditu eta iritzia eskatzen du.",
+          "llm_score": 7.8
+        },
+        {
+          "id": 11883,
+          "topic": "django",
+          "source_id": "django_forum_dev",
+          "title": "Introducing myself — Prachi Singh (GSoC 2026)",
+          "url": "https://forum.djangoproject.com/t/introducing-myself-prachi-singh-gsoc-2026/44219",
+          "published_at": "2026-02-20T12:48:27+00:00",
+          "priority": 40,
+          "tags": [
+            "strong",
+            "span",
+            "class",
+            "hashtag-raw",
+            "django",
+            "prachi",
+            "singh",
+            "https"
+          ],
+          "summary_short": "Prachi Singh Django-n (GSoC 2026) parte hartzeko interesa duen ikaslea da, django-admin-keyshortcuts proiektuan lan egin du eta Django-ren admin interfazearen erabilgarritasuna hobetu nahi du.",
+          "llm_score": 7.8
+        },
+        {
+          "id": 11886,
+          "topic": "django",
+          "source_id": "django_security_announcements",
+          "title": "Django ORM Standalone⁽¹⁾: Querying an existing database",
+          "url": "https://forum.djangoproject.com/t/django-orm-standalone-querying-an-existing-database/44218",
+          "published_at": "2026-02-20T12:10:06+00:00",
+          "priority": 40,
+          "tags": [
+            "class",
+            "div",
+            "django",
+            "https",
+            "orm",
+            "standalone",
+            "existing",
+            "database"
+          ],
+          "summary_short": "Artikuluak Django ORM modu autonomoan erabiltzeko modu praktiko bat azaltzen du, lehendik dagoen datu-base batera konektatzeko eta arakatzeko Django proiektu oso bat sortu gabe. `inspectdb` erabiliz datu-basea aztertzea.",
+          "llm_score": 7.8
         }
       ]
     },
     "ai": {
       "window_days": 7,
-      "since": "2026-02-09T16:48:20.711695+00:00",
-      "until": "2026-02-16T16:48:20.711695+00:00",
+      "since": "2026-02-16T14:29:31.499341+00:00",
+      "until": "2026-02-23T14:29:31.499341+00:00",
       "sections": [
         {
           "name": "industry",
           "items": [
             {
-              "id": 218,
+              "id": 11891,
               "topic": "ai",
-              "source_id": "openai",
-              "title": "Introducing GPT-5.3-Codex-Spark",
-              "url": "https://openai.com/index/introducing-gpt-5-3-codex-spark",
-              "published_at": "2026-02-12T10:00:00+00:00",
+              "source_id": "google_ai",
+              "title": "AI Impact Summit 2026",
+              "url": "https://blog.google/innovation-and-ai/technology/ai/ai-impact-summit-2026-collection/",
+              "published_at": "2026-02-19T04:30:00+00:00",
               "priority": 40,
               "tags": [
                 "industry",
-                "introducing",
-                "gpt-5.3-codex-spark",
-                "first",
-                "real-time",
-                "coding",
-                "model.",
-                "15x",
-                "faster"
+                "impact",
+                "summit",
+                "2026",
+                "look",
+                "partnerships",
+                "investments",
+                "google",
+                "announced"
               ],
-              "summary_short": "GPT-5.3-Codex-Spark aurkezten dugu, gure lehenengo kode-eredi denbora errealean. 15 aldiz bizkorragoa da, 128k kontekto du eta ChatGPT Pro erabiltzaileentzat ikerketa-aurrerapenetan dago.",
+              "summary_short": "Googlek 2026ko AI Impact Summit-ean iragarritako lankidetza eta inbertsioak aztertzen dira. Industriarentzat garrantzitsua izan daiteke etorkizuneko joerak erakusten dituelako.",
+              "llm_score": 8.8
+            },
+            {
+              "id": 11895,
+              "topic": "ai",
+              "source_id": "mit_tech_review_ia",
+              "title": "Microsoft has a new plan to prove what’s real and what’s AI online",
+              "url": "https://www.technologyreview.com/2026/02/19/1133360/microsoft-has-a-new-plan-to-prove-whats-real-and-whats-ai-online/",
+              "published_at": "2026-02-19T16:00:00+00:00",
+              "priority": 100,
+              "tags": [
+                "industry",
+                "but",
+                "content",
+                "href",
+                "https",
+                "microsoft",
+                "what",
+                "could",
+                "has"
+              ],
+              "summary_short": "Microsoft-ek plan bat aurkeztu du online-ko edukiaren benetakotasuna egiaztatzeko, AI-ren bidezko iruzurrak detektatzeko teknikak erabiliz. Horretarako, hainbat metodo aztertu dituzte, hala nola metadata, watermark-ak eta hatz-marka digitalak.",
               "llm_score": 8.5
             },
             {
-              "id": 219,
+              "id": 11898,
               "topic": "ai",
               "source_id": "openai",
-              "title": "Harness engineering: leveraging Codex in an agent-first world",
-              "url": "https://openai.com/index/harness-engineering",
-              "published_at": "2026-02-11T09:00:00+00:00",
+              "title": "OpenAI announces Frontier Alliance Partners",
+              "url": "https://openai.com/index/frontier-alliance-partners",
+              "published_at": "2026-02-23T05:30:00+00:00",
               "priority": 40,
               "tags": [
                 "industry",
-                "harness",
-                "engineering",
-                "leveraging",
-                "codex",
-                "agent-first",
-                "world",
-                "ryan",
-                "lopopolo"
+                "openai",
+                "announces",
+                "frontier",
+                "alliance",
+                "partners",
+                "help",
+                "enterprises",
+                "move"
               ],
-              "summary_short": "Artikulu honek 'Harness engineering' delakoaren garrantzia azpimarratzen du, Codex AI eragile baten munduan erabiliz. Eragile lehenetsiko sistemetan, garapena bizkortzeko eta automatizatzeko erakundeak nola erabil ditzaketen aditzen du.",
-              "llm_score": 8.1
+              "summary_short": "OpenAI-k Frontier Alliance Partners iragarri du, enpresei AI pilotuetatik produkziora igarotzen laguntzeko, agente hedapenen bidez, seguru eta eskalagarriak izanik. Hau industriarentzat garrantzitsua da.",
+              "llm_score": 8.5
+            },
+            {
+              "id": 11904,
+              "topic": "ai",
+              "source_id": "xataka_ia",
+              "title": "El problema no es que tu influencer favorito te venda la moto. El problema es que a lo mejor ni existe",
+              "url": "https://www.xataka.com/aplicaciones/problema-no-que-tu-influencer-favorito-te-venda-moto-problema-que-a-mejor-existe",
+              "published_at": "2026-02-21T15:30:07+00:00",
+              "priority": 40,
+              "tags": [
+                "industry",
+                "class",
+                "x20",
+                "div",
+                "que",
+                "https",
+                "los",
+                "con",
+                "strong"
+              ],
+              "summary_short": "Artikuluak adimen artifizialez sortutako influencerrak aztertzen ditu, haien existentzia eta eragina zalantzan jarriz. Etorkizunean, influencer hauek ohikoak izango direla iradokitzen du.",
+              "llm_score": 8.5
+            },
+            {
+              "id": 11908,
+              "topic": "ai",
+              "source_id": "xataka_ia",
+              "title": "Gemini 3.1 Pro acaba de destronar a Claude: Google vuelve a liderar la carrera de la IA y tiene algo que ningún rival puede igualar",
+              "url": "https://www.xataka.com/robotica-e-ia/gemini-3-1-pro-acaba-destronar-a-claude-google-vuelve-a-liderar-carrera-ia-tiene-algo-que-ningun-rival-puede-igualar",
+              "published_at": "2026-02-20T17:30:09+00:00",
+              "priority": 40,
+              "tags": [
+                "industry",
+                "que",
+                "x20",
+                "class",
+                "div",
+                "https",
+                "href",
+                "gemini",
+                "google"
+              ],
+              "summary_short": "Google-k Gemini 3.1 Pro aurkeztu du, arrazoibide abstraktuan nabarmenduz eta Anthropic eta OpenAI gaindituz. Gainera, Google-k IA bere ekosisteman integratzeko abantaila du, beste startup-ek ez dutena.",
+              "llm_score": 8.5
             }
           ]
         },

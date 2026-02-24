@@ -3,7 +3,8 @@ from agents.main_graph import main_graph
 
 def main():
     print("🗞️ [Weekly] Iniciando generación del Boletín...")
-    prompt = "Las noticias ya están traducidas. Ejecuta ÚNICAMENTE al Publisher para generar el PDF."
+    prompt = "MODO SEMANAL. Las noticias ya están en la base de datos. Ejecuta DIRECTAMENTE al Publisher para generar el PDF y enviar el correo. Cuando el Publisher termine, finaliza."
+    
     initial_state = {"messages": [HumanMessage(content=prompt)], "next_agent": "", "errors": []}
     
     for event in main_graph.stream(initial_state, {"recursion_limit": 50}):
