@@ -1,4 +1,24 @@
 ai:
   rss:
-  - name: TechCrunch
-    url: https://techcrunch.com/feed/
+  - name: Arize AI Blog
+    url: https://arize.com/feed/
+  - name: Meta Engineering
+    url: https://engineering.fb.com/feed/
+  - name: Journal of Machine Learning Research
+    url: https://www.jmlr.org/jmlr.xml
+  - name: Journal of Machine Learning Research
+    score: 9
+    url: https://jmlr.csail.mit.edu/jmlr.xml
+  - name: Proceedings of Machine Learning Research
+    score: 8
+    url: https://proceedings.mlr.press/v49/feed.xml
+django:
+  rss:
+  - name: Kraken Engineering
+    url: https://engineering.kraken.tech/feed.xml
+plone:
+  rss:
+  - name: David Bain's Blog
+    url: https://blog.dbain.com/feeds/posts/default
+  - name: Plone Beginner
+    url: https://plonebeginner.blogspot.com/feeds/posts/default

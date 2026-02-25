@@ -34,3 +34,10 @@ https://www.zhihu.com/question/555079885
 https://MiniWebtool.com/rss.xml
 https://tcrf.net/index.php?title=Special:RecentChanges&feed=atom
 https://www.google.com/intl/en-GB/account/about/index.rss
+https://planet.plone.org/planet.plone.org/atom.xml
+https://planet.plone.org/planet.plone.org/atom.xml
+https://planet.plone.org/planet.plone.org/atom.xml
+https://planet.plone.org/planet.plone.org/atom.xml
+https://tnqtech.com/feed/
+https://www.kdnuggets.com/feed/
+https://www.kdnuggets.com/feed/
