@@ -1,17 +1,19 @@
 ai:
   rss:
-  - name: Arize AI Blog
-    url: https://arize.com/feed/
-  - name: Meta Engineering
-    url: https://engineering.fb.com/feed/
   - name: Journal of Machine Learning Research
     url: https://www.jmlr.org/jmlr.xml
-  - name: Journal of Machine Learning Research
-    score: 9
-    url: https://jmlr.csail.mit.edu/jmlr.xml
   - name: Proceedings of Machine Learning Research
     score: 8
     url: https://proceedings.mlr.press/v49/feed.xml
+  - name: Journal of Machine Learning Research
+    score: 9
+    url: https://jmlr.csail.mit.edu/jmlr.xml
+  - name: Journal of Machine Learning Research
+    score: 9
+    url: https://jmlr.org/jmlr.xml
+  - name: TechTalks
+    score: 7
+    url: https://bdtechtalks.com/feed/
 django:
   rss:
   - name: Kraken Engineering

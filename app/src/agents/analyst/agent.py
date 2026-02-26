@@ -1,131 +1,118 @@
 import os
-import json
-import psycopg
-import uuid
-import re
-from qdrant_client import QdrantClient
-from qdrant_client.models import PointStruct, Filter, FieldCondition, MatchValue
-from sentence_transformers import SentenceTransformer
-from langchain_core.messages import AIMessage
+from typing import Optional
+from pydantic import BaseModel, Field
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 
 from ..state import OverallState
-from .skills.evaluate_article import evaluate_article_tool
+from .tools.skill_reader import read_expert_skill
+from .tools.db_tools import get_pending_news, save_analysis
+from .tools.semantic_memory import check_semantic_memory
 
-COLLECTION_NAME = "techwatch_items"
-SIMILARITY_THRESHOLD = 0.85
-# Palabras clave de corrección/desmentido
-CORRECTION_KEYWORDS = re.compile(r"\b(correction|update|debunk|false|falso|desmiente|retracted|errata|fixed|patch)\b", re.IGNORECASE)
+# We force the LLM to reply exactly with this structure
+class EvaluationResult(BaseModel):
+    score: float = Field(description="Score from 0.0 to 10.0 based strictly on the rubric")
+    summary_short: str = Field(description="Direct, journalistic summary of the news. No intro phrases.")
+
+def get_analyst_llm():
+    """Instantiates the LLM with structured output support."""
+    provider = os.environ.get("LLM_PROVIDER", "ollama").lower()
+    if provider == "ollama":
+        from langchain_openai import ChatOpenAI
+        base_url = os.environ.get("OLLAMA_API_URL", "http://ollama:11434").replace("/api", "") + "/v1"
+        llm = ChatOpenAI(
+            base_url=base_url,
+            api_key=os.environ.get("OLLAMA_API_KEY", "ollama"),
+            model=os.environ.get("OLLAMA_MODEL", "gemma3:12b-cloud")
+        )
+    else:
+        from langchain_google_genai import ChatGoogleGenerativeAI
+        api_key = os.environ.get("GEMINI_API_KEY", "PUT_YOUR_KEY_HERE_IF_IT_FAILS")
+        api_key = api_key.replace('"', '').replace("'", "")
+        llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key)
+        
+    return llm.with_structured_output(EvaluationResult)
+
 
 def analyst_node(state: OverallState) -> dict:
-    print("🧠 [Analyst] Ejecutando análisis REAL y CLUSTERING avanzado...")
-    db_url = os.environ.get("DATABASE_URL")
-    qdrant_url = os.environ.get("QDRANT_URL", "http://qdrant:6333")
+    print("🧠 [Analyst] Starting Expert Evaluation Pipeline...")
     
-    model = SentenceTransformer("all-MiniLM-L6-v2")
-    qdrant = QdrantClient(url=qdrant_url)
+    llm_with_structure = get_analyst_llm()
+    topics = ["plone", "django", "ai"]
     
-    procesados = 0; ecos = 0; correcciones = 0; duplicados = 0
+    # --- CONFIGURATION ---
+    MAX_NEWS_PER_TOPIC = 100  # Will fetch up to 100 news per topic safely
+    # ---------------------
     
-    with psycopg.connect(db_url) as conn:
-        with conn.cursor() as cur:
-            # Añadimos source_type a la consulta para tu regla de autoridad
-            cur.execute("SELECT id, topic, title, coalesce(content_text,''), source_type FROM items WHERE status='ready' AND qdrant_id IS NULL ORDER BY fetched_at DESC LIMIT 100")
-            rows = cur.fetchall()
+    total_evaluated = 0
+    total_duplicates = 0
+
+    for topic in topics:
+        print(f"\n   🎯 [Analyst] Waking up {topic.upper()} Expert...")
+        
+        # 1. Fetch pending news for this specific topic
+        pending_news = get_pending_news(topic, limit=MAX_NEWS_PER_TOPIC)
+        if not pending_news:
+            print(f"      No pending news for {topic.upper()}. Expert goes back to sleep.")
+            continue
             
-            for item_id, topic, title, content_text, source_type in rows:
-                print(f"   Analizando noticia ID {item_id} ({topic})...")
-                vector = model.encode(f"{topic}\n{title}\n{content_text}").tolist()
+        # 2. Inject the skill into the Expert's brain (System Prompt)
+        rubric_content = read_expert_skill(f"{topic.upper()}_EVALUATION")
+        if not rubric_content:
+            print(f"      ⚠️ Missing {topic.upper()}_EVALUATION.md skill. Skipping.")
+            continue
+            
+        system_prompt = SystemMessage(content=f"""
+        You are a Senior Technical Analyst. Your absolute area of expertise is {topic.upper()}.
+        You must evaluate technical news using the following rubric strictly.
+        
+        RUBRIC:
+        {rubric_content}
+        """)
+        
+        print(f"      Expert awake. Evaluating {len(pending_news)} news items...")
+        
+        # 3. Feed news to the expert one by one
+        for row in pending_news:
+            item_id, title, content, source_type = row
+            
+            # A) Ask Semantic Memory (Qdrant) FIRST
+            mem_result = check_semantic_memory(item_id, topic, title, content, source_type)
+            
+            # If Qdrant says it's an echo/trend, skip the LLM entirely
+            if mem_result["action"] == "duplicate":
+                save_analysis(item_id, topic, status="duplicate")
+                print(f"      🗑️  Item {item_id}: Marked as duplicate (Trend detected).")
+                total_duplicates += 1
+                continue
                 
-                # Búsqueda en Qdrant con filtro de Topic (tu código original)
-                search_result = qdrant.query_points(
-                    collection_name=COLLECTION_NAME,
-                    query=vector,
-                    query_filter=Filter(must=[FieldCondition(key="topic", match=MatchValue(value=topic))]),
-                    limit=1,
-                    score_threshold=SIMILARITY_THRESHOLD
-                ).points
+            # B) LLM Evaluation (The Expert evaluates ONLY this news using its injected skill)
+            user_msg = HumanMessage(content=f"Evaluate this news:\n\nTitle: {title}\nSource Type: {source_type}\nContent: {content[:1500]}")
+            
+            try:
+                # The expert returns the score and the summary based on the rubric
+                eval_data: EvaluationResult = llm_with_structure.invoke([system_prompt, user_msg])
                 
-                if search_result:
-                    match = search_result[0]
-                    original_id = match.payload.get("item_id")
-                    
-                    cur.execute("SELECT source_type, COALESCE(llm_score, 0.0), cluster_count FROM items WHERE id=%s", (original_id,))
-                    orig_data = cur.fetchone()
-                    
-                    if not orig_data:
-                        cur.execute("UPDATE items SET status='duplicate' WHERE id=%s", (item_id,))
-                        duplicados += 1
-                        continue
-                        
-                    orig_source_type, orig_score, orig_cluster = orig_data
-                    
-                    # CASO 1: Corrección / Desmentido
-                    if CORRECTION_KEYWORDS.search(title):
-                        print(f"   🚨 CORRECCIÓN/DESMENTIDO detectado: '{title[:30]}...'")
-                        # Castigamos a la original
-                        cur.execute("UPDATE items SET llm_score = GREATEST(0.0, llm_score - 5.0) WHERE id=%s", (original_id,))
-                        
-                        # Evaluamos la corrección y la guardamos
-                        eval_json_str = evaluate_article_tool.invoke({"topic": topic, "title": title, "content": content_text})
-                        try:
-                            eval_data = json.loads(eval_json_str)
-                            score = float(eval_data.get("score", 5.0))
-                            summary = eval_data.get("summary_short", "Resumen no disponible.")
-                        except:
-                            score = 5.0; summary = "Error procesando corrección."
-                        
-                        new_qdrant_id = str(uuid.uuid4())
-                        qdrant.upsert(collection_name=COLLECTION_NAME, points=[PointStruct(id=new_qdrant_id, vector=vector, payload={"item_id": item_id, "topic": topic})])
-                        cur.execute("UPDATE items SET status='evaluated', summary_short=%s, llm_score=%s, qdrant_id=%s WHERE id=%s", (summary, score, new_qdrant_id, item_id))
-                        correcciones += 1
-                        
-                    # CASO 2: Autoridad Oficial absorbe rumor
-                    elif source_type == 'official' and orig_source_type != 'official':
-                        print(f"   👑 AUTORIDAD OFICIAL: Absorbe rumor anterior.")
-                        cur.execute("UPDATE items SET status='duplicate' WHERE id=%s", (original_id,))
-                        
-                        new_score = min(orig_score + 1.0, 10.0)
-                        new_cluster = orig_cluster + 1
-                        
-                        eval_json_str = evaluate_article_tool.invoke({"topic": topic, "title": title, "content": content_text})
-                        try:
-                            eval_data = json.loads(eval_json_str)
-                            summary = eval_data.get("summary_short", "Resumen no disponible.")
-                        except:
-                            summary = "Error procesando noticia oficial."
-                            
-                        new_qdrant_id = str(uuid.uuid4())
-                        qdrant.upsert(collection_name=COLLECTION_NAME, points=[PointStruct(id=new_qdrant_id, vector=vector, payload={"item_id": item_id, "topic": topic})])
-                        cur.execute("UPDATE items SET status='evaluated', summary_short=%s, llm_score=%s, cluster_count=%s, qdrant_id=%s WHERE id=%s", (summary, new_score, new_cluster, new_qdrant_id, item_id))
-                        ecos += 1
-                        
-                    # CASO 3: Tendencia Normal (Eco)
-                    else:
-                        print(f"   📈 Tendencia (Eco): Suma puntos al original.")
-                        cur.execute("UPDATE items SET status='duplicate' WHERE id=%s", (item_id,))
-                        cur.execute("UPDATE items SET llm_score = LEAST(llm_score + 1.0, 10.0), cluster_count = cluster_count + 1 WHERE id=%s", (original_id,))
-                        ecos += 1
-                        duplicados += 1
+                # C) Combine Expert Score + Qdrant Modifier
+                raw_score = eval_data.score
+                modifier = mem_result["modifier"]
+                final_score = max(0.0, min(10.0, raw_score + modifier))
                 
-                else:
-                    # CASO 4: 100% Original
-                    print("   ✅ Noticia nueva. Pidiendo evaluación al LLM...")
-                    eval_json_str = evaluate_article_tool.invoke({"topic": topic, "title": title, "content": content_text})
-                    
-                    try:
-                        eval_data = json.loads(eval_json_str)
-                        score = float(eval_data.get("score", 5.0))
-                        summary = eval_data.get("summary_short", "Resumen no disponible.")
-                    except Exception as e:
-                        score = 5.0; summary = "Error al procesar el texto."
-                    
-                    new_qdrant_id = str(uuid.uuid4())
-                    qdrant.upsert(collection_name=COLLECTION_NAME, points=[PointStruct(id=new_qdrant_id, vector=vector, payload={"item_id": item_id, "topic": topic})])
-                    
-                    cur.execute("UPDATE items SET status='evaluated', summary_short=%s, llm_score=%s, qdrant_id=%s WHERE id=%s", (summary, score, new_qdrant_id, item_id))
-                    procesados += 1
-                    
-        conn.commit()
+                # D) Save results
+                save_analysis(
+                    item_id=item_id,
+                    topic=topic,
+                    status="evaluated",
+                    summary=eval_data.summary_short,
+                    final_score=final_score,
+                    vector=mem_result["vector"]
+                )
+                print(f"      ✅ Item {item_id}: Evaluated. Final Score: {final_score}/10")
+                total_evaluated += 1
+                
+            except Exception as e:
+                print(f"      ❌ Failed to evaluate item {item_id}: {e}")
+
+    final_message = f"Analyst evaluation completed. {total_evaluated} evaluated, {total_duplicates} duplicates skipped. Passes turn to Translator."
+    print(f"\n✅ {final_message}")
     
-    mensaje = f"Evaluadas {procesados} noticias nuevas, {ecos} ecos y {correcciones} desmentidos. Descartados {duplicados} duplicados. Pasa el turno al Translator."
-    return {"messages": [AIMessage(content=mensaje)]}
+    return {"messages": [AIMessage(content=final_message)]}

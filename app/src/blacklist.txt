@@ -41,3 +41,5 @@ https://planet.plone.org/planet.plone.org/atom.xml
 https://tnqtech.com/feed/
 https://www.kdnuggets.com/feed/
 https://www.kdnuggets.com/feed/
+https://www.kdnuggets.com/feed/
+https://www.kdnuggets.com/feed/
