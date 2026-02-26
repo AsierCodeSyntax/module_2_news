@@ -1,34 +1,49 @@
 import os
-import json
-import psycopg
 from langchain_core.messages import AIMessage
-
 from ..state import OverallState
-from .skills.translate_text import translate_to_euskera_tool
+
+# Import our pure Python tools
+from .tools.db_tools import get_news_to_translate, save_translation
+from .tools.translate_llm import get_translator_llm, translate_content
 
 def translator_node(state: OverallState) -> dict:
-    print("🌍 [Translator] Ejecutando traducción REAL en Python...")
-    db_url = os.environ.get("DATABASE_URL")
-    traducidos = 0
+    print("🌍 [Translator] Executing Data Pipeline for Translation...")
     
-    with psycopg.connect(db_url) as conn:
-        with conn.cursor() as cur:
-            cur.execute("SELECT id, title, summary_short FROM items WHERE status='evaluated' ORDER BY fetched_at DESC LIMIT 100")
-            rows = cur.fetchall()
+    translated_count = 0
+    
+    # 1. Fetch news (Pure Python, no LLM cost)
+    rows = get_news_to_translate(limit=200)
+    
+    if not rows:
+        print("   ✅ No pending news to translate.")
+        return {"messages": [AIMessage(content="Translation finished. No pending news.")]}
+        
+    # 2. Instantiate LLM once
+    llm = get_translator_llm()
+    
+    print(f"   📥 Found {len(rows)} news to translate.")
+    
+    # 3. Iterate and translate
+    for item_id, title, summary in rows:
+        print(f"\n   🔄 Processing item ID {item_id}...")
+        
+        try:
+            # A) Invoke structured output LLM
+            trans_data = translate_content(llm, title, summary)
             
-            for item_id, title, summary in rows:
-                print(f"   Traduciendo noticia ID {item_id}...")
-                trans_json_str = translate_to_euskera_tool.invoke({"title": title, "summary": summary})
-                try:
-                    trans_data = json.loads(trans_json_str)
-                    title_eu = trans_data.get("title_eu", title)
-                    summary_eu = trans_data.get("summary_eu", summary)
-                except:
-                    title_eu = title; summary_eu = summary
+            # B) Save to DB using pure Python
+            success = save_translation(item_id, trans_data.title_eu, trans_data.summary_eu)
+            
+            if success:
+                translated_count += 1
+                print(f"      ✅ Item {item_id} translated and saved successfully.")
                 
-                cur.execute("UPDATE items SET title=%s, summary_short=%s, status='translated' WHERE id=%s", (title_eu, summary_eu, item_id))
-                traducidos += 1
-        conn.commit()
+        except Exception as e:
+            # If it fails (e.g., API timeout), it skips to the next one.
+            # It will remain as 'evaluated' and get picked up in the next run.
+            print(f"      ❌ Error translating ID {item_id}: {e}")
+            
+    message = f"Translation pipeline completed. Successfully translated {translated_count} news items."
+    print(f"\n✅ {message}")
     
-    mensaje = f"Traducción terminada. He traducido {traducidos} noticias."
-    return {"messages": [AIMessage(content=mensaje)]}
+    return {"messages": [AIMessage(content=message)]}

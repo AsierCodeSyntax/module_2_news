@@ -20,7 +20,5 @@ django:
     url: https://engineering.kraken.tech/feed.xml
 plone:
   rss:
-  - name: David Bain's Blog
-    url: https://blog.dbain.com/feeds/posts/default
   - name: Plone Beginner
     url: https://plonebeginner.blogspot.com/feeds/posts/default

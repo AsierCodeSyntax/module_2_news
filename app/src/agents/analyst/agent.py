@@ -40,7 +40,7 @@ def analyst_node(state: OverallState) -> dict:
     topics = ["plone", "django", "ai"]
     
     # --- CONFIGURATION ---
-    MAX_NEWS_PER_TOPIC = 100  # Will fetch up to 100 news per topic safely
+    MAX_NEWS_PER_TOPIC = 200  # Will fetch up to 100 news per topic safely
     # ---------------------
     
     total_evaluated = 0

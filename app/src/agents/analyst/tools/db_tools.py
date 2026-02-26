@@ -7,11 +7,31 @@ from qdrant_client.models import PointStruct
 COLLECTION_NAME = "techwatch_items"
 
 def get_pending_news(topic: str, limit: int = 100) -> list:
-    """Fetches up to 'limit' pending news for a specific topic."""
+    """Fetches up to 'limit' pending news, filtering out items older than 14 days."""
     db_url = os.environ.get("DATABASE_URL")
+    print(f"   📥 [Analyst: DB] Fetching pending news for '{topic.upper()}'...")
     try:
         with psycopg.connect(db_url) as conn:
             with conn.cursor() as cur:
+                # 1. AUTO-CLEANUP: Mark old news as 'ignored_old' so they don't consume tokens
+                # We use COALESCE just in case 'published_at' is NULL (it falls back to fetched_at)
+                cur.execute(
+                    """
+                    UPDATE items 
+                    SET status='ignored_old' 
+                    WHERE status='ready' 
+                      AND topic=%s 
+                      AND COALESCE(published_at, fetched_at) < NOW() - INTERVAL '14 days'
+                    """,
+                    (topic,)
+                )
+                
+                # Print how many old items were discarded to keep track
+                discarded_count = cur.rowcount
+                if discarded_count > 0:
+                    print(f"      🧹 Auto-cleaned {discarded_count} old news (older than 14 days) for {topic.upper()}.")
+                
+                # 2. FETCH: Only fetch the remaining fresh news
                 cur.execute(
                     """
                     SELECT id, title, coalesce(content_text,'') as content_text, source_type
@@ -22,7 +42,10 @@ def get_pending_news(topic: str, limit: int = 100) -> list:
                     """,
                     (topic, limit)
                 )
+                
+                conn.commit()
                 return cur.fetchall()
+                
     except Exception as e:
         print(f"❌ DB Error fetching news: {e}")
         return []
