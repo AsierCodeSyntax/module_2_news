@@ -55,6 +55,26 @@ services:
     depends_on:
       - postgres
 
+  api:
+      restart: unless-stopped
+      build: ./app
+      container_name: techwatch_api
+      depends_on:
+        - postgres
+        - qdrant
+      environment:
+        DATABASE_URL: "postgresql://techwatch:techwatch@postgres:5432/techwatch"
+        QDRANT_URL: "http://qdrant:6333"
+        # (Opcional: puedes copiar aquí también las keys de la IA si el backend lo necesita en el futuro)
+      ports:
+        - "8000:8000"  # Exponemos el puerto 8000 para React
+      volumes:
+        - ./:/workspace
+      working_dir: /workspace
+      # Lanzamos el servidor uvicorn con recarga en caliente para desarrollo
+      command: ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+      #http://localhost:8000/docs
+
 
   # n8n:
   #   image: n8nio/n8n:latest
