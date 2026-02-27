@@ -62,14 +62,16 @@
 <% if topics.ai['sections'] %>
 \section*{\includegraphics[height=14pt]{AALogoa.png}\hspace{0.4cm}Adimen Artifizialeko Aurrerapenak}
 <% for sec in topics.ai['sections'] %>
-    \subsection*{<< sec.name | capitalize >>}
-    \begin{itemize}
-    <% for item in sec['items'] %>
-        \item \textbf{<< item.title | escape_tex >>} \hfill {\color{darkgray}\textit{Garrantzia: << item.llm_score >>/10}} \\
-        << item.summary_short | escape_tex >> \\
-        {\footnotesize \url{<< item.url | escape_tex >>}} \vspace{0.3cm}
-    <% endfor %>
-    \end{itemize}
+    <% if sec['items'] %>
+        \subsection*{<< sec.name | capitalize >>}
+        \begin{itemize}
+        <% for item in sec['items'] %>
+            \item \textbf{<< item.title | escape_tex >>} \hfill {\color{darkgray}\textit{Garrantzia: << item.llm_score >>/10}} \\
+            << item.summary_short | escape_tex >> \\
+            {\footnotesize \url{<< item.url | escape_tex >>}} \vspace{0.3cm}
+        <% endfor %>
+        \end{itemize}
+    <% endif %>
 <% endfor %>
 <% endif %>
 

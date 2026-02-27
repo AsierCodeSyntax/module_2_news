@@ -33,7 +33,8 @@ export function ReviewView({ onNavigate }: ReviewViewProps) {
   const [articles, setArticles] = useState<NewsArticle[]>([])
   const [selectedArticle, setSelectedArticle] = useState<NewsArticle | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-
+  const [pdfTimestamp, setPdfTimestamp] = useState(Date.now())
+  const [isSending, setIsSending] = useState(false)
   // URL base de tu API
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000"
 
@@ -67,14 +68,27 @@ export function ReviewView({ onNavigate }: ReviewViewProps) {
 
       setArticles(flatList)
       if (flatList.length > 0) setSelectedArticle(flatList[0])
-
+      setPdfTimestamp(Date.now())
     } catch (error) {
       console.error(error)
     } finally {
       setIsLoading(false)
     }
   }
+  async function handleSendEmail() {
+    setIsSending(true)
+    try {
+      const response = await fetch(`${API_URL}/api/bulletin/send`, { method: "POST" })
+      if (!response.ok) throw new Error("Fallo al enviar el correo")
 
+      alert("✅ ¡El boletín se ha enviado por correo correctamente!")
+    } catch (error) {
+      console.error(error)
+      alert("❌ Hubo un error al enviar el correo.")
+    } finally {
+      setIsSending(false)
+    }
+  }
   function handleDiscard(id: number) {
     // Aquí luego meteremos la llamada a Python para recalcular
     const updated = articles.filter((a) => a.id !== id)
@@ -171,17 +185,30 @@ export function ReviewView({ onNavigate }: ReviewViewProps) {
                 <CardContent className="p-0 h-[520px]">
                   {/* Visor de PDF embebido apuntando a tu FastAPI */}
                   <iframe
-                    src={`${API_URL}/static/bulletin_compiled.pdf#toolbar=0`}
+                    src={`${API_URL}/static/bulletin_compiled.pdf?t=${pdfTimestamp}#toolbar=0`}
                     className="w-full h-full border-0"
                     title="PDF Preview"
                   />
                 </CardContent>
               </Card>
 
-              <Button size="lg" className="h-12 bg-success text-success-foreground hover:bg-success/90">
-                <CheckCircle className="size-5 mr-2" />
-                <Mail className="size-5 mr-2" />
-                <span className="font-semibold">Approve & Send Email</span>
+              <Button
+                size="lg"
+                className="h-12 bg-success text-success-foreground hover:bg-success/90"
+                onClick={handleSendEmail}
+                disabled={isSending}
+              >
+                {isSending ? (
+                  <Loader2 className="size-5 mr-2 animate-spin" />
+                ) : (
+                  <>
+                    <CheckCircle className="size-5 mr-2" />
+                    <Mail className="size-5 mr-2" />
+                  </>
+                )}
+                <span className="font-semibold">
+                  {isSending ? "Sending Email..." : "Approve & Send Email"}
+                </span>
               </Button>
             </div>
           </div>

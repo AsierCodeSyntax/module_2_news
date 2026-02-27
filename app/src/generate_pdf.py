@@ -13,6 +13,23 @@ def escape_latex(s: str) -> str:
     s = re.sub(r'([&%$#_{}])', r'\\\1', s)
     s = s.replace('~', '\\textasciitilde{}')
     s = s.replace('^', '\\textasciicircum{}')
+    # 2. Map Greek letters to math mode (very common in AI papers)
+    greek_map = {
+        'α': r'$\alpha$', 'β': r'$\beta$', 'γ': r'$\gamma$', 'δ': r'$\delta$',
+        'ε': r'$\epsilon$', 'ζ': r'$\zeta$', 'η': r'$\eta$', 'θ': r'$\theta$',
+        'ι': r'$\iota$', 'κ': r'$\kappa$', 'λ': r'$\lambda$', 'μ': r'$\mu$',
+        'ν': r'$\nu$', 'ξ': r'$\xi$', 'ο': r'$o$', 'π': r'$\pi$', 'ρ': r'$\rho$',
+        'σ': r'$\sigma$', 'τ': r'$\tau$', 'υ': r'$\upsilon$', 'φ': r'$\phi$',
+        'χ': r'$\chi$', 'ψ': r'$\psi$', 'ω': r'$\omega$', 'Δ': r'$\Delta$',
+        'Γ': r'$\Gamma$', 'Θ': r'$\Theta$', 'Λ': r'$\Lambda$', 'Ξ': r'$\Xi$',
+        'Π': r'$\Pi$', 'Σ': r'$\Sigma$', 'Φ': r'$\Phi$', 'Ψ': r'$\Psi$', 'Ω': r'$\Omega$'
+    }
+    for char, latex_equiv in greek_map.items():
+        s = s.replace(char, latex_equiv)
+        
+    # 3. Strip dangerous Unicode characters (Emojis, non-Latin scripts)
+    # Keeps ASCII, Latin-1 (ñ, accents), typographic quotes, and our injected math symbols
+    s = re.sub(r'[^\u0000-\u00FF\u2013-\u2014\u2018-\u201D\u2026\$\\\{\}]', '', s)
     return s
 
 def main():

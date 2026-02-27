@@ -44,10 +44,11 @@ def get_latest_bulletin():
 def run_bulletin_generation():
     try:
         subprocess.run(["python", "app/src/select_week.py"], check=True, cwd="/workspace")
-        return {"message": "Borrador generado con éxito. Listo para revisión."}
+        subprocess.run(["python", "app/src/generate_pdf.py"], check=True, cwd="/workspace")
+        
+        return {"message": "Draft and PDF successfully generated. Ready for review."}
     except subprocess.CalledProcessError as e:
         raise HTTPException(status_code=500, detail=f"Error en la generación: {str(e)}")
-
 @app.post("/api/news/manual")
 def add_manual_news(news: ManualNewsInput):
     """Descarga la noticia a mano usando Trafilatura para extraer solo el artículo limpio."""
@@ -133,3 +134,13 @@ def add_manual_news(news: ManualNewsInput):
     except Exception as e:
         print(f"❌ Error inyectando noticia manual: {e}")
         raise HTTPException(status_code=500, detail=f"No se pudo procesar la URL: {str(e)}")
+    
+
+@app.post("/api/bulletin/send")
+def send_bulletin_email():
+    """Ejecuta el script que coge el PDF y lo manda por Gmail."""
+    try:
+        subprocess.run(["python", "app/src/send_manual_email.py"], check=True, cwd="/workspace")
+        return {"message": "¡Correo enviado con éxito al destinatario!"}
+    except subprocess.CalledProcessError as e:
+        raise HTTPException(status_code=500, detail="Error enviando el correo. Comprueba las credenciales en Docker.")

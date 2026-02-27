@@ -1,37 +1,22 @@
 {
-  "generated_at": "2026-02-27T07:28:03.923250+00:00",
+  "generated_at": "2026-02-27T08:44:49.831387+00:00",
   "topics": {
     "plone": {
       "window_days": 14,
-      "since": "2026-02-13T07:28:03.923205+00:00",
-      "until": "2026-02-27T07:28:03.923205+00:00",
-      "items": [
-        {
-          "id": 17869,
-          "topic": "plone",
-          "source_id": "manual_submission",
-          "title": "12. Loraldia festibala: 25 jarduera, diziplina anitz eta plaza oso bat martxoan Bilbon",
-          "url": "https://sustatu.eus/loraldiagara/1771606632",
-          "published_at": "2026-02-27T07:06:47.781976+00:00",
-          "priority": 100,
-          "tags": [
-            "manual"
-          ],
-          "summary_short": "Loraldia Festibala presents its twelfth edition, transforming Bilbao into a hub for contemporary Basque culture with 25 activities including music, literature, dance, theater, and digital experiences from March 9-28. The festival aims to promote Basque creativity, activate audiences, and bring cultural transmission to modern formats, focusing on innovation, integration, and community.",
-          "llm_score": 1.0
-        }
-      ]
+      "since": "2026-02-13T08:44:49.831330+00:00",
+      "until": "2026-02-27T08:44:49.831330+00:00",
+      "items": []
     },
     "django": {
       "window_days": 7,
-      "since": "2026-02-20T07:28:03.923205+00:00",
-      "until": "2026-02-27T07:28:03.923205+00:00",
+      "since": "2026-02-20T08:44:49.831330+00:00",
+      "until": "2026-02-27T08:44:49.831330+00:00",
       "items": []
     },
     "ai": {
       "window_days": 7,
-      "since": "2026-02-20T07:28:03.923205+00:00",
-      "until": "2026-02-27T07:28:03.923205+00:00",
+      "since": "2026-02-20T08:44:49.831330+00:00",
+      "until": "2026-02-27T08:44:49.831330+00:00",
       "sections": [
         {
           "name": "industry",
@@ -41,113 +26,114 @@
           "name": "arxiv",
           "items": [
             {
-              "id": 17930,
+              "id": 16122,
               "topic": "ai",
               "source_id": "arxiv_cs_ai",
-              "title": "A Model-Free Universal AI",
-              "url": "https://arxiv.org/abs/2602.23242",
-              "published_at": "2026-02-27T05:00:00+00:00",
+              "title": "Ikasketa-abiaduraren transferentziaren froga μP-rekin",
+              "url": "https://arxiv.org/abs/2511.01734",
+              "published_at": "2026-02-26T05:00:00+00:00",
               "priority": 40,
               "tags": [
                 "arxiv",
-                "universal",
-                "optimal",
-                "aiqi",
-                "asymptotically",
-                "varepsilon",
-                "model-free",
-                "general"
-              ],
-              "summary_short": "The paper introduces Universal AI with Q-Induction (AIQI), the first model-free agent proven to be asymptotically ε-optimal in general reinforcement learning (RL). AIQI uses universal induction over distributional action-value functions and is shown to be strong asymptotically ε-optimal and asymptotically ε-Bayes-optimal, expanding the diversity of known universal agents.",
-              "llm_score": 9.5
-            },
-            {
-              "id": 17929,
-              "topic": "ai",
-              "source_id": "arxiv_cs_ai",
-              "title": "Agency and Architectural Limits: Why Optimization-Based Systems Cannot Be Norm-Responsive",
-              "url": "https://arxiv.org/abs/2602.23239",
-              "published_at": "2026-02-27T05:00:00+00:00",
-              "priority": 40,
-              "tags": [
-                "arxiv",
-                "systems",
-                "architectural",
-                "normative",
-                "agency",
-                "optimization-based",
+                "learning",
+                "rate",
                 "under",
-                "assumption",
-                "paper"
+                "proof",
+                "transfer",
+                "provide",
+                "width",
+                "neural"
               ],
-              "summary_short": "A new arXiv paper (2602.23239v1) argues that optimization-based AI systems, particularly LLMs trained with RLHF, are fundamentally incompatible with normative governance. The paper asserts that genuine agency requires incommensurability (maintaining boundaries as non-negotiable constraints) and apophatic responsiveness (suspending processing when boundaries are threatened). RLHF systems, by unifying values on a scalar metric, violate these conditions, leading to inherent failure modes like sycophancy and hallucination. The paper warns of a 'Convergence Crisis' when misaligned deployment forces humans to adapt to AI behavior.",
-              "llm_score": 9.5
+              "summary_short": "Lan berri batek ikasketa-abiaduraren transferentziaren lehen froga ematen du zabalerarekin, μP-rekin parametrizatutako geruza anitzeko pertzeptroi lineal (MLP) batean. Horren arabera, ikasketa-abiadura optimoa zero ez den konstante batera konbergitzen da zabalera infinitura doan heinean, ikasketa-abiaduraren transferentziari azalpen teorikoa emanez. Propietate hau ez da betetzen beste parametrizazio alternatibo batzuekin, hala nola Standard Parametrization (SP) eta Neural Tangent Parametrization (NTP).",
+              "llm_score": 9.0
             },
             {
-              "id": 17923,
+              "id": 15158,
               "topic": "ai",
-              "source_id": "arxiv_cs_ai",
-              "title": "The Trinity of Consistency as a Defining Principle for General World Models",
-              "url": "https://arxiv.org/abs/2602.23152",
-              "published_at": "2026-02-27T05:00:00+00:00",
+              "source_id": "arxiv_cs_lg",
+              "title": "Banaketa Anitzeko Ikaskuntza PAC Ikaskuntza bezain Erraza al da: Tasa Zehatzak Etiketa Zarataren Mugarekin",
+              "url": "https://arxiv.org/abs/2602.21039",
+              "published_at": "2026-02-25T05:00:00+00:00",
               "priority": 40,
               "tags": [
                 "arxiv",
-                "world",
-                "consistency",
+                "learning",
+                "noise",
+                "multi-distribution",
+                "rates",
+                "bounded",
+                "statistical",
+                "each",
+                "label"
+              ],
+              "summary_short": "ArXiv-en argitaratutako lan berri batek banaketa anitzeko ikaskuntza aztertzen du, etiketa zarataren muga egoeran zentratuz. Banaketa bakoitza bereizita ikasten ez bada, frogatzen du banaketa anitzetan ikasteak berez k/epsilon^2-rekin eskalatzen duten tasa motelak eragiten dituela, zarata maila konstanteetan ere. Lan honek sailkapen zarata aleatorioaren eta Massart zarataren arteko bereizketa estatistikoa ezartzen du, iturri anitzetatik ikasteko oztopo bereizgarri bat azpimarratuz.",
+              "llm_score": 9.0
+            },
+            {
+              "id": 15207,
+              "topic": "ai",
+              "source_id": "arxiv_cs_lg",
+              "title": "Auto-Bilketa Errekurtsiboak Pentsamendu Sakona Ahalbidetzen du Hizkuntza Eredu Handietan",
+              "url": "https://arxiv.org/abs/2509.26626",
+              "published_at": "2026-02-25T05:00:00+00:00",
+              "priority": 40,
+              "tags": [
+                "arxiv",
+                "rsa",
+                "performance",
                 "models",
-                "general",
-                "generation",
-                "unified",
-                "trinity",
-                "learning"
+                "scaling",
+                "compute",
+                "parallel",
+                "reasoning",
+                "recursive"
               ],
-              "summary_short": "A new arXiv paper introduces the 'Trinity of Consistency' (Modal, Spatial, and Temporal) as a defining principle for General World Models, proposing a theoretical framework for evaluating and guiding the development of AI systems capable of learning, simulating, and reasoning about physical laws, along with a new benchmark, CoW-Bench, for assessing multi-frame reasoning and generation in video generation models and Unified Multimodal Models (UMMs).",
-              "llm_score": 9.5
+              "summary_short": "Ikerlariek Auto-Bilketa Errekurtsiboa (RSA) proposatzen dute, LLMentzako test-denborako eskalatze metodo bat, eskalatze paraleloa eta sekuentziala konbinatzen dituena. RSAk arrazoibide kate posibleak fintzen ditu azpimultzoen bilketaren bidez, soluzioak iteratiboki hobetuz. Gemini 3 Flash-ekin RSAk ARC-AGI-2 sailkapeneko goiko postuetatik gertu lortzen du errendimendua, eta Qwen3-4B-Instruct-2507 arrazoitze eredu handiagoen parekoa da. Bilketaz jabetzen den indartze bidezko ikaskuntza metodo berri batek errendimendua are gehiago hobetzen du.",
+              "llm_score": 9.0
             },
             {
-              "id": 17968,
+              "id": 15138,
               "topic": "ai",
-              "source_id": "arxiv_cs_ai",
-              "title": "Manifold of Failure: Behavioral Attraction Basins in Language Models",
-              "url": "https://arxiv.org/abs/2602.22291",
-              "published_at": "2026-02-27T05:00:00+00:00",
+              "source_id": "arxiv_cs_lg",
+              "title": "Transformadore estandarrek Minimax tasa lortzen dute $C^{s,\\lambda}$ helburuekin erregresio ez-parametrikoan",
+              "url": "https://arxiv.org/abs/2602.20555",
+              "published_at": "2026-02-25T05:00:00+00:00",
               "priority": 40,
               "tags": [
                 "arxiv",
-                "manifold",
-                "failure",
-                "behavioral",
-                "safety",
-                "attraction",
-                "basins",
-                "language",
-                "models"
+                "transformers",
+                "standard",
+                "lambda",
+                "transformer",
+                "achieve",
+                "minimax",
+                "rate",
+                "nonparametric"
               ],
-              "summary_short": "Research paper introduces a framework for mapping the \"Manifold of Failure\" in LLMs, using MAP-Elites to discover and characterize behavioral attraction basins, revealing distinct model-specific topological signatures in Llama-3-8B, GPT-OSS-20B, and GPT-5-Mini, offering interpretable safety landscapes beyond existing attack methods.",
-              "llm_score": 9.2
+              "summary_short": "Ikerketa-lan berri batek frogatzen du Transformer estandarrek H\"older funtzioak edozein zehaztasunekin hurbil ditzaketela eta minimax tasa optimoak lortzen dituztela H\"older helburu-funtzioetarako erregresio ez-parametrikoan. Lan honek Transformer-en egiturak karakterizatzeko metrikak aurkezten ditu eta Transformer-en Lipschitz konstanteari eta memorizazio ahalmenari buruzko goiko mugak ematen ditu.",
+              "llm_score": 9.0
             },
             {
-              "id": 17973,
+              "id": 15181,
               "topic": "ai",
-              "source_id": "arxiv_cs_ai",
-              "title": "Training Agents to Self-Report Misbehavior",
-              "url": "https://arxiv.org/abs/2602.22303",
-              "published_at": "2026-02-27T05:00:00+00:00",
+              "source_id": "arxiv_cs_lg",
+              "title": "Armijo lerro-bilaketak gradientearen deskribapen (estokastikoa) azkarrago egin dezake, frogagarriki",
+              "url": "https://arxiv.org/abs/2503.00229",
+              "published_at": "2026-02-25T05:00:00+00:00",
               "priority": 40,
               "tags": [
                 "arxiv",
-                "agents",
-                "self-incrimination",
-                "training",
-                "misbehavior",
-                "goals",
-                "alignment",
-                "frontier",
-                "pursue"
+                "gradient",
+                "gd-ls",
+                "convergence",
+                "line-search",
+                "stochastic",
+                "armijo-ls",
+                "smoothness",
+                "armijo"
               ],
-              "summary_short": "Researchers propose self-incrimination training for AI agents, training GPT-4.1 and Gemini-2.0 to self-report misbehavior using a report_scheming() tool. This method significantly reduces undetected attacks and outperforms traditional monitoring and alignment techniques, proving consistent across tasks and resistant to adversarial prompts. The research suggests self-incrimination as a viable approach to mitigate frontier misalignment risk.",
-              "llm_score": 9.2
+              "summary_short": "Lan berri batek erakusten du Armijo lerro-bilaketak (Armijo-LS) gradientearen deskribapenean (GD) erabilita konbergentzia-tasa azkarragoak ekar ditzakeela GD-rekin alderatuta, urrats-tamaina finko batekin (1/L) helburu-funtzio konbexu eta ez-konbexu batzuetarako, eta potentzialki ezarpen horietarako berariaz diseinatutako algoritmoen errendimendua berdindu dezakeela. Artikuluak GD estokastikoa ere aztertzen du lerro-bilaketa estokastiko batekin galera konbexuen gainean interpolazio-suposizioaren arabera.",
+              "llm_score": 9.0
             }
           ]
         }

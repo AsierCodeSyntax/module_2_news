@@ -58,9 +58,10 @@ def select_items_for_topic(
                    published_at, priority, tags, summary_short, llm_score
             FROM items
             WHERE topic=%s
-              AND status='evaluated'
+              AND status='translated'
               AND published_at >= %s
               AND published_at < %s
+              AND llm_score >= 6
         """
         params = [topic, since, until]
 
