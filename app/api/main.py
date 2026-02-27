@@ -7,7 +7,7 @@ import trafilatura
 import hashlib
 import yaml
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from bs4 import BeautifulSoup
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -327,3 +327,100 @@ def delete_source(topic: str, url: str):
                     yaml.dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
                 
     return {"message": "Fuente eliminada con éxito."}
+
+@app.get("/api/dashboard/stats")
+def get_dashboard_stats():
+    """Recopila estadísticas reales de la BBDD y YAMLs para el dashboard."""
+    db_url = os.environ.get("DATABASE_URL")
+    now = datetime.now(timezone.utc)
+    seven_days_ago = now - timedelta(days=7)
+
+    # 1. Contar fuentes activas en los YAMLs
+    active_sources = 0
+    for yaml_file in ["/workspace/sources.yaml", "/workspace/sources_ia.yaml"]:
+        if os.path.exists(yaml_file):
+            with open(yaml_file, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f) or {}
+                if "topics" in data:
+                    for t, t_data in data["topics"].items():
+                        if isinstance(t_data, dict) and "sources" in t_data:
+                            active_sources += len(t_data["sources"])
+
+    with psycopg.connect(db_url) as conn:
+        with conn.cursor() as cur:
+            # 2. KPIs de los últimos 7 días
+            cur.execute("SELECT COUNT(*) FROM items WHERE fetched_at >= %s", (seven_days_ago,))
+            ingested_count = cur.fetchone()[0]
+
+            cur.execute("SELECT COUNT(*) FROM items WHERE fetched_at >= %s AND llm_score >= 8", (seven_days_ago,))
+            high_quality_count = cur.fetchone()[0]
+
+            cur.execute("SELECT COUNT(*) FROM items WHERE fetched_at >= %s AND 'manual' = ANY(tags)", (seven_days_ago,))
+            manual_count = cur.fetchone()[0]
+
+            # 3. Gráfico de Volumen (Últimos 7 días)
+            cur.execute("""
+                SELECT DATE(fetched_at), COUNT(*)
+                FROM items
+                WHERE fetched_at >= %s
+                GROUP BY DATE(fetched_at)
+            """, (seven_days_ago,))
+            daily_counts = dict(cur.fetchall())
+
+            ingestion_data = []
+            for i in range(6, -1, -1):
+                day_date = (now - timedelta(days=i)).date()
+                day_name = day_date.strftime("%a") # Mon, Tue, etc.
+                ingestion_data.append({
+                    "day": day_name,
+                    "articles": daily_counts.get(day_date, 0)
+                })
+
+            # 4. Calidad media por Topic
+            cur.execute("""
+                SELECT topic, AVG(llm_score)
+                FROM items
+                WHERE llm_score IS NOT NULL
+                GROUP BY topic
+            """)
+            quality_data = [{"topic": row[0].upper() if row[0].lower() == 'ai' else row[0].title(), "score": round(row[1], 1)} for row in cur.fetchall()]
+
+            # 5. Distribución de Origen
+            cur.execute("SELECT source_type, COUNT(*) FROM items GROUP BY source_type")
+            source_dist = []
+            for row in cur.fetchall():
+                s_type = row[0] or "unknown"
+                name = "RSS" if s_type == "rss" else "Scrape" if s_type == "scrape" else "Manual" if s_type == "manual" else s_type.capitalize()
+                source_dist.append({"name": name, "value": row[1]})
+            if not source_dist:
+                source_dist = [{"name": "Sin datos", "value": 1}] # Fallback seguro
+
+            # 6. Top 3 Artículos del día/semana
+            cur.execute("""
+                SELECT id, title, topic, llm_score
+                FROM items
+                WHERE llm_score IS NOT NULL 
+                ORDER BY llm_score DESC, published_at DESC
+                LIMIT 3
+            """)
+            top_articles = []
+            for row in cur.fetchall():
+                top_articles.append({
+                    "id": row[0],
+                    "title": row[1],
+                    "topic": row[2].upper() if row[2].lower() == 'ai' else row[2].title(),
+                    "score": float(row[3])
+                })
+
+    return {
+        "kpis": {
+            "active_sources": active_sources,
+            "ingested": ingested_count,
+            "high_quality": high_quality_count,
+            "manual": manual_count
+        },
+        "ingestion_data": ingestion_data,
+        "quality_by_topic": quality_data,
+        "source_distribution": source_dist,
+        "top_articles": top_articles
+    }

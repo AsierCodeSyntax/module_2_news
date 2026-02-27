@@ -26,6 +26,7 @@ const navItems = [
   { id: "review" as View, label: "Review Bulletin", icon: Eye },
   { id: "archive" as View, label: "Archive", icon: Archive },
   { id: "sources" as View, label: "RSS Sources", icon: Rss },
+  { id: "m2-charts" as View, label: "Module 2 Charts", icon: FileText },
 
 
 ]
