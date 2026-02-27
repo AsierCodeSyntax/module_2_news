@@ -144,3 +144,29 @@ def send_bulletin_email():
         return {"message": "¡Correo enviado con éxito al destinatario!"}
     except subprocess.CalledProcessError as e:
         raise HTTPException(status_code=500, detail="Error enviando el correo. Comprueba las credenciales en Docker.")
+    
+@app.post("/api/bulletin/discard/{item_id}")
+def discard_news_item(item_id: int):
+    """Marca una noticia como rechazada y regenera el boletín con la siguiente mejor."""
+    try:
+        # 1. Cambiar el estado en la base de datos a 'rejected'
+        db_url = os.environ.get("DATABASE_URL")
+        with psycopg.connect(db_url) as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "UPDATE items SET status = 'rejected' WHERE id = %s",
+                    (item_id,)
+                )
+                conn.commit()
+
+        # 2. Regenerar el JSON (Automáticamente cogerá el reemplazo si lo hay)
+        subprocess.run(["python", "app/src/select_week.py"], check=True, cwd="/workspace")
+        
+        # 3. Regenerar el PDF
+        subprocess.run(["python", "app/src/generate_pdf.py"], check=True, cwd="/workspace")
+
+        return {"message": f"Noticia {item_id} descartada y boletín regenerado."}
+        
+    except Exception as e:
+        print(f"❌ Error descartando noticia: {e}")
+        raise HTTPException(status_code=500, detail=f"No se pudo descartar: {str(e)}")

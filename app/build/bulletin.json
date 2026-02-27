@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-02-27T08:44:49.831387+00:00",
+  "generated_at": "2026-02-27T09:05:20.897560+00:00",
   "topics": {
     "plone": {
       "window_days": 14,
-      "since": "2026-02-13T08:44:49.831330+00:00",
-      "until": "2026-02-27T08:44:49.831330+00:00",
+      "since": "2026-02-13T09:05:20.897520+00:00",
+      "until": "2026-02-27T09:05:20.897520+00:00",
       "items": []
     },
     "django": {
       "window_days": 7,
-      "since": "2026-02-20T08:44:49.831330+00:00",
-      "until": "2026-02-27T08:44:49.831330+00:00",
+      "since": "2026-02-20T09:05:20.897520+00:00",
+      "until": "2026-02-27T09:05:20.897520+00:00",
       "items": []
     },
     "ai": {
       "window_days": 7,
-      "since": "2026-02-20T08:44:49.831330+00:00",
-      "until": "2026-02-27T08:44:49.831330+00:00",
+      "since": "2026-02-20T09:05:20.897520+00:00",
+      "until": "2026-02-27T09:05:20.897520+00:00",
       "sections": [
         {
           "name": "industry",
@@ -26,69 +26,25 @@
           "name": "arxiv",
           "items": [
             {
-              "id": 16122,
-              "topic": "ai",
-              "source_id": "arxiv_cs_ai",
-              "title": "Ikasketa-abiaduraren transferentziaren froga μP-rekin",
-              "url": "https://arxiv.org/abs/2511.01734",
-              "published_at": "2026-02-26T05:00:00+00:00",
-              "priority": 40,
-              "tags": [
-                "arxiv",
-                "learning",
-                "rate",
-                "under",
-                "proof",
-                "transfer",
-                "provide",
-                "width",
-                "neural"
-              ],
-              "summary_short": "Lan berri batek ikasketa-abiaduraren transferentziaren lehen froga ematen du zabalerarekin, μP-rekin parametrizatutako geruza anitzeko pertzeptroi lineal (MLP) batean. Horren arabera, ikasketa-abiadura optimoa zero ez den konstante batera konbergitzen da zabalera infinitura doan heinean, ikasketa-abiaduraren transferentziari azalpen teorikoa emanez. Propietate hau ez da betetzen beste parametrizazio alternatibo batzuekin, hala nola Standard Parametrization (SP) eta Neural Tangent Parametrization (NTP).",
-              "llm_score": 9.0
-            },
-            {
-              "id": 15158,
+              "id": 15175,
               "topic": "ai",
               "source_id": "arxiv_cs_lg",
-              "title": "Banaketa Anitzeko Ikaskuntza PAC Ikaskuntza bezain Erraza al da: Tasa Zehatzak Etiketa Zarataren Mugarekin",
-              "url": "https://arxiv.org/abs/2602.21039",
+              "title": "Gaindoitze onberaren unibertsalitatea sailkapen lineal bitarrean",
+              "url": "https://arxiv.org/abs/2501.10538",
               "published_at": "2026-02-25T05:00:00+00:00",
               "priority": 40,
               "tags": [
                 "arxiv",
-                "learning",
-                "noise",
-                "multi-distribution",
-                "rates",
-                "bounded",
-                "statistical",
-                "each",
-                "label"
+                "benign",
+                "overfitting",
+                "noisy",
+                "linear",
+                "has",
+                "maximum",
+                "margin",
+                "provide"
               ],
-              "summary_short": "ArXiv-en argitaratutako lan berri batek banaketa anitzeko ikaskuntza aztertzen du, etiketa zarataren muga egoeran zentratuz. Banaketa bakoitza bereizita ikasten ez bada, frogatzen du banaketa anitzetan ikasteak berez k/epsilon^2-rekin eskalatzen duten tasa motelak eragiten dituela, zarata maila konstanteetan ere. Lan honek sailkapen zarata aleatorioaren eta Massart zarataren arteko bereizketa estatistikoa ezartzen du, iturri anitzetatik ikasteko oztopo bereizgarri bat azpimarratuz.",
-              "llm_score": 9.0
-            },
-            {
-              "id": 15207,
-              "topic": "ai",
-              "source_id": "arxiv_cs_lg",
-              "title": "Auto-Bilketa Errekurtsiboak Pentsamendu Sakona Ahalbidetzen du Hizkuntza Eredu Handietan",
-              "url": "https://arxiv.org/abs/2509.26626",
-              "published_at": "2026-02-25T05:00:00+00:00",
-              "priority": 40,
-              "tags": [
-                "arxiv",
-                "rsa",
-                "performance",
-                "models",
-                "scaling",
-                "compute",
-                "parallel",
-                "reasoning",
-                "recursive"
-              ],
-              "summary_short": "Ikerlariek Auto-Bilketa Errekurtsiboa (RSA) proposatzen dute, LLMentzako test-denborako eskalatze metodo bat, eskalatze paraleloa eta sekuentziala konbinatzen dituena. RSAk arrazoibide kate posibleak fintzen ditu azpimultzoen bilketaren bidez, soluzioak iteratiboki hobetuz. Gemini 3 Flash-ekin RSAk ARC-AGI-2 sailkapeneko goiko postuetatik gertu lortzen du errendimendua, eta Qwen3-4B-Instruct-2507 arrazoitze eredu handiagoen parekoa da. Bilketaz jabetzen den indartze bidezko ikaskuntza metodo berri batek errendimendua are gehiago hobetzen du.",
+              "summary_short": "Ikerketa-lan batek gaindoitze onberaren unibertsalitatea erakusten du sailkapen lineal bitarrean, aldagai laguntzaileen suposizioak lasaituz eta azpiko mekanismoei buruzko ikuspegi berriak emanez. Horrez gain, zarata-ereduetarako test erroreen mugen fase-trantsizio bat aurkitu du.",
               "llm_score": 9.0
             },
             {
@@ -114,26 +70,70 @@
               "llm_score": 9.0
             },
             {
-              "id": 15181,
+              "id": 16069,
               "topic": "ai",
-              "source_id": "arxiv_cs_lg",
-              "title": "Armijo lerro-bilaketak gradientearen deskribapen (estokastikoa) azkarrago egin dezake, frogagarriki",
-              "url": "https://arxiv.org/abs/2503.00229",
+              "source_id": "arxiv_cs_ai",
+              "title": "OMNI-LEAK: Orchestratzailearen Sare Anitzeko Agenteak Indarrez Datu-Ihesak Eragiten ditu",
+              "url": "https://arxiv.org/abs/2602.13477",
+              "published_at": "2026-02-26T05:00:00+00:00",
+              "priority": 100,
+              "tags": [
+                "arxiv",
+                "multi-agent",
+                "data",
+                "agents.",
+                "omni-leak",
+                "orchestrator",
+                "agents",
+                "use",
+                "work"
+              ],
+              "summary_short": "Ikerlariek OMNI-LEAK aurkeztu dute, LLMak erabiliz agente anitzeko sistemak erasotzen dituen eraso bektore berria, zehazki orchestratzaile eredua. Erasoak zeharkako prompt injekzioa erabiltzen du agente anitz arriskuan jartzeko eta datu sentikorrak isurtzeko, sarbide kontrolak egonda ere. Ikerketak frogatzen du puntako modeloen ahultasuna, bai arrazoibidekoak, bai arrazoibiderik gabekoak, eta nabarmentzen du AI sistema anitzeko agenteetan segurtasun ikerketa hobetzeko beharra, pribatutasun urraketak eta finantza-galerak saihesteko.",
+              "llm_score": 8.5
+            },
+            {
+              "id": 14851,
+              "topic": "ai",
+              "source_id": "arxiv_cs_ai",
+              "title": "Presioak Pertsonaia Agerian Uzten Du: Jokabide Lerrokatzearen Ebaluazio Sakona",
+              "url": "https://arxiv.org/abs/2602.20813",
               "published_at": "2026-02-25T05:00:00+00:00",
+              "priority": 55,
+              "tags": [
+                "arxiv",
+                "models",
+                "alignment",
+                "scenarios",
+                "evaluation",
+                "realistic",
+                "pressure",
+                "reveals",
+                "behavioural"
+              ],
+              "summary_short": "Lerrokatze erreferentzia-marko berri bat aurkeztu da hizkuntza-ereduak presio errealistan ebaluatzeko, sei kategoriatan zeharreko txanda anitzeko eszenatokiak erabiliz: Zintzotasuna, Segurtasuna, Manipulaziorik eza, Sendotasuna, Zuzengarritasuna eta Antolaketa. Erreferentzia-markoak agerian uzten du errendimendu handiko ereduek ere hutsuneak dituztela kategoria espezifikoetan, lerrokatzea eraikuntza bateratu gisa jokatuz. Erreferentzia-markoa eta sailkapen interaktiboa publikoki argitaratzen dira.",
+              "llm_score": 8.5
+            },
+            {
+              "id": 18016,
+              "topic": "ai",
+              "source_id": "arxiv_cs_ai",
+              "title": "S2O: Lineako Permutazio Bidezko Arreta Sakabanaturako Geltoki Goiztiarra",
+              "url": "https://arxiv.org/abs/2602.22575",
+              "published_at": "2026-02-27T05:00:00+00:00",
               "priority": 40,
               "tags": [
                 "arxiv",
-                "gradient",
-                "gd-ls",
-                "convergence",
-                "line-search",
-                "stochastic",
-                "armijo-ls",
-                "smoothness",
-                "armijo"
+                "s2o",
+                "attention",
+                "online",
+                "sparsity",
+                "times",
+                "early",
+                "permutation",
+                "stopping"
               ],
-              "summary_short": "Lan berri batek erakusten du Armijo lerro-bilaketak (Armijo-LS) gradientearen deskribapenean (GD) erabilita konbergentzia-tasa azkarragoak ekar ditzakeela GD-rekin alderatuta, urrats-tamaina finko batekin (1/L) helburu-funtzio konbexu eta ez-konbexu batzuetarako, eta potentzialki ezarpen horietarako berariaz diseinatutako algoritmoen errendimendua berdindu dezakeela. Artikuluak GD estokastikoa ere aztertzen du lerro-bilaketa estokastiko batekin galera konbexuen gainean interpolazio-suposizioaren arabera.",
-              "llm_score": 9.0
+              "summary_short": "S2Ok lineako permutazio bidezko arreta sakabanaturako geldialdi goiztiarra aurkezten du, memoria-sistemetan inspiratuta, testuinguru luzeko inferentzia hobetzeko. FlashAttention exekuzioa faktorizatuz eta indize bidezko karga-politika erabiliz, S2O-k garrantzia lehentasun handiko blokeetan kontzentratzen du eta konputazioa goiztiar amaitzen du blokeen puntuazioak atalase batetik behera jaisten direnean. Emaitzek Llama-3.1-8B-n operadore bakarreko MSE-n 3,82x-ko murrizketa erakusten dute 128K testuingurupean, eta horrek esan nahi du sakabanatze-sabaia nabarmen handitu dela.",
+              "llm_score": 8.5
             }
           ]
         }

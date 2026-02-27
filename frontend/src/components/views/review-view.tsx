@@ -89,11 +89,29 @@ export function ReviewView({ onNavigate }: ReviewViewProps) {
       setIsSending(false)
     }
   }
-  function handleDiscard(id: number) {
-    // Aquí luego meteremos la llamada a Python para recalcular
-    const updated = articles.filter((a) => a.id !== id)
-    setArticles(updated)
-    if (selectedArticle?.id === id) setSelectedArticle(updated[0] ?? null)
+  async function handleDiscard(id: number) {
+    // Pedimos confirmación por si le das sin querer
+    if (!confirm("¿Descartar esta noticia? El sistema buscará un reemplazo automáticamente y regenerará el PDF.")) {
+      return;
+    }
+
+    setIsLoading(true) // Mostramos el spinner
+    try {
+      // 1. Llamar al backend para descartar y regenerar
+      const response = await fetch(`${API_URL}/api/bulletin/discard/${id}`, {
+        method: "POST"
+      })
+
+      if (!response.ok) throw new Error("Fallo al descartar la noticia")
+
+      // 2. Volver a cargar los datos frescos de la BD y forzar la recarga del PDF
+      await fetchBulletinData()
+
+    } catch (error) {
+      console.error(error)
+      alert("❌ Hubo un error al descartar la noticia.")
+      setIsLoading(false)
+    }
   }
 
   return (
