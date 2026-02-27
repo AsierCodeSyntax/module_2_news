@@ -9,8 +9,7 @@ import {
   CardContent,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Zap, FileText, PlusCircle, ArrowRight, Loader2 } from "lucide-react"
-
+import { Zap, FileText, PlusCircle, ArrowRight, Loader2, Archive } from "lucide-react"
 type View = "home" | "module" | "add-news" | "review"
 
 interface ModuleViewProps {
@@ -129,7 +128,27 @@ export function ModuleView({ onNavigate }: ModuleViewProps) {
               </div>
             </CardContent>
           </Card>
-
+          {/* BOTÓN 4: ARCHIVE */}
+          <Card
+            className="group cursor-pointer border-border transition-all hover:border-foreground/20 hover:shadow-md"
+            onClick={() => onNavigate("archive")}
+          >
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-primary">
+                  <Archive className="size-5 text-primary-foreground" />
+                </div>
+              </div>
+              <CardTitle className="mt-2 text-base">Bulletin Archive</CardTitle>
+              <CardDescription>Browse, preview, and download previously published weekly bulletins.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors group-hover:text-foreground">
+                View archive
+                <ArrowRight className="size-3" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </main>
     </div>

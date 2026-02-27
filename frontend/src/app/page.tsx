@@ -6,8 +6,9 @@ import { HomeView } from "@/components/views/home-view"
 import { ModuleView } from "@/components/views/module-view"
 import { AddNewsView } from "@/components/views/add-news-view"
 import { ReviewView } from "@/components/views/review-view"
+import { ArchiveView } from "@/components/views/archive-view"
 
-type View = "home" | "module" | "add-news" | "review"
+type View = "home" | "module" | "add-news" | "review" | "archive"
 
 export default function Page() {
   const [currentView, setCurrentView] = useState<View>("home")
@@ -21,6 +22,7 @@ export default function Page() {
         <AddNewsView onNavigate={setCurrentView} />
       )}
       {currentView === "review" && <ReviewView onNavigate={setCurrentView} />}
+      {currentView === "archive" && <ArchiveView onNavigate={setCurrentView} />}
     </div>
   )
 }

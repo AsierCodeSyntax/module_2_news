@@ -6,6 +6,7 @@ import {
   Newspaper,
   PlusCircle,
   FileText,
+  Archive,
   Settings,
   Eye,
 } from "lucide-react"
@@ -22,6 +23,8 @@ const navItems = [
   { id: "module" as View, label: "News Bulletin", icon: Newspaper },
   { id: "add-news" as View, label: "Add News", icon: PlusCircle },
   { id: "review" as View, label: "Review Bulletin", icon: Eye },
+  { id: "archive" as View, label: "Archive", icon: Archive },
+
 ]
 
 export function AppSidebar({ currentView, onNavigate }: AppSidebarProps) {

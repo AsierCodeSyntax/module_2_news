@@ -170,3 +170,33 @@ def discard_news_item(item_id: int):
     except Exception as e:
         print(f"❌ Error descartando noticia: {e}")
         raise HTTPException(status_code=500, detail=f"No se pudo descartar: {str(e)}")
+    
+@app.get("/api/archive")
+def list_archived_bulletins():
+    """Devuelve la lista de todos los PDFs guardados en el histórico."""
+    archive_dir = "/workspace/app/build/archive"
+    
+    # Si la carpeta no existe aún (porque no se ha generado ningún histórico), devolvemos lista vacía
+    if not os.path.exists(archive_dir):
+        return {"pdfs": []}
+        
+    pdfs = []
+    for filename in os.listdir(archive_dir):
+        if filename.endswith(".pdf"):
+            file_path = os.path.join(archive_dir, filename)
+            # Extraemos la fecha del nombre del archivo (ej: bulletin_2026-02-27.pdf -> 2026-02-27)
+            date_str = filename.replace("bulletin_", "").replace(".pdf", "")
+            size_mb = os.path.getsize(file_path) / (1024 * 1024)
+            
+            pdfs.append({
+                "id": filename,
+                "filename": filename,
+                "url": f"/static/archive/{filename}",
+                "date": date_str,
+                "size_mb": round(size_mb, 2)
+            })
+            
+    # Ordenar de más reciente a más antiguo
+    pdfs.sort(key=lambda x: x["date"], reverse=True)
+    
+    return {"pdfs": pdfs}
