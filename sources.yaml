@@ -1,169 +1,172 @@
 version: 1
-
 defaults:
   ingest:
-    cadence: "daily"
+    cadence: daily
     max_items_per_source: 50
     timeout_seconds: 20
-    user_agent: "TechWatchBot/1.0"
+    user_agent: TechWatchBot/1.0
   bulletin:
-    cadence: "weekly"
+    cadence: weekly
     window_days: 7
   processing:
-    language: "en"
+    language: en
     dedupe:
-      method: "canonical_url_or_content_hash"
+      method: canonical_url_or_content_hash
     content:
       prefer_fulltext: false
       fallback_to_scrape: true
-
 topics:
   plone:
     bulletin:
-      cadence: "weekly"
+      cadence: weekly
       window_days: 14
       max_items: 5
-
     sources:
-      - id: "plone_official_news"
-        type: "scrape"
-        name: "Plone.org News & Events"
-        url: "https://plone.org/news-and-events"
-        cadence: "daily"
-        authority: "official"
-        parser: "plone_news_events"
-        tags: ["official", "announcement", "release"]
-
-      - id: "plone_security_advisories"
-        type: "scrape"
-        name: "Plone.org Security Advisories"
-        url: "https://plone.org/security"
-        cadence: "daily"
-        authority: "official"
-        parser: "plone_security"
-        tags: ["official", "security", "cve"]
-
-      - id: "plone_forum_announcements"
-        type: "rss"
-        name: "Plone Community Announcements"
-        url: "https://community.plone.org/c/announcements.rss"
-        tags: ["community", "announcement"]
-
-      - id: "plone_volto_releases"
-        type: "rss"
-        name: "Plone Volto Releases"
-        url: "https://github.com/plone/plone.volto/releases.atom"
-        tags: ["github", "release", "volto"]
-
-      - id: "plone_restapi_releases"
-        type: "rss"
-        name: "plone.restapi Releases"
-        url: "https://github.com/plone/plone.restapi/releases.atom"
-        tags: ["github", "release", "backend"]
-
-      - id: "plone_core_releases"
-        type: "rss"
-        name: "CMFPlone Core Releases"
-        url: "https://github.com/plone/Products.CMFPlone/releases.atom"
-        tags: ["github", "release", "core"]
-
-      - id: "maurits_vanrees_plone_posts"
-        type: "rss"
-        name: "Maurits van Rees – Plone Posts"
-        url: "https://maurits.vanrees.org/weblog/topics/plone/@@atom.xml"
-        tags: ["blog", "core-dev", "analysis"]
-
-      - id: "planet_plone"
-        type: "rss"
-        name: "Planet Plone Aggregator"
-        url: "https://planet.plone.org/rss20.xml"
-        tags: ["aggregator", "community"]
-
+    - id: plone_official_news
+      type: scrape
+      name: Plone.org News & Events
+      url: https://plone.org/news-and-events
+      cadence: daily
+      authority: official
+      parser: plone_news_events
+      tags:
+      - official
+      - announcement
+      - release
+    - id: plone_security_advisories
+      type: scrape
+      name: Plone.org Security Advisories
+      url: https://plone.org/security
+      cadence: daily
+      authority: official
+      parser: plone_security
+      tags:
+      - official
+      - security
+      - cve
+    - id: plone_forum_announcements
+      type: rss
+      name: Plone Community Announcements
+      url: https://community.plone.org/c/announcements.rss
+      tags:
+      - community
+      - announcement
+    - id: plone_volto_releases
+      type: rss
+      name: Plone Volto Releases
+      url: https://github.com/plone/plone.volto/releases.atom
+      tags:
+      - github
+      - release
+      - volto
+    - id: plone_restapi_releases
+      type: rss
+      name: plone.restapi Releases
+      url: https://github.com/plone/plone.restapi/releases.atom
+      tags:
+      - github
+      - release
+      - backend
+    - id: plone_core_releases
+      type: rss
+      name: CMFPlone Core Releases
+      url: https://github.com/plone/Products.CMFPlone/releases.atom
+      tags:
+      - github
+      - release
+      - core
+    - id: maurits_vanrees_plone_posts
+      type: rss
+      name: Maurits van Rees – Plone Posts
+      url: https://maurits.vanrees.org/weblog/topics/plone/@@atom.xml
+      tags:
+      - blog
+      - core-dev
+      - analysis
+    - id: planet_plone
+      type: rss
+      name: Planet Plone Aggregator
+      url: https://planet.plone.org/rss20.xml
+      tags:
+      - aggregator
+      - community
   django:
     bulletin:
       max_items: 5
-
     sources:
-      - id: "django_official_weblog"
-        type: "rss"
-        url: "https://www.djangoproject.com/rss/weblog/"
-
-      - id: "django_forum_announcements"
-        type: "rss"
-        url: "https://forum.djangoproject.com/c/announcements/7.rss"
-
-      - id: "django_releases"
-        type: "rss"
-        url: "https://github.com/django/django/releases.atom"
-
-      - id: "django_security_announcements"
-        type: "rss"
-        url: "https://forum.djangoproject.com/c/security/11.rss"
-
-      - id: "django_software_foundation"
-        type: "rss"
-        url: "https://www.djangoproject.com/rss/foundation/"
-        enabled: false
-        
-      - id: "django_news_newsletter"
-        type: "rss"
-        url: "https://django-news.com/issues.rss"
-
-      - id: "django_forum_dev"
-        type: "rss"
-        url: "https://forum.djangoproject.com/c/development/5.rss"
-
+    - id: django_official_weblog
+      type: rss
+      url: https://www.djangoproject.com/rss/weblog/
+    - id: django_forum_announcements
+      type: rss
+      url: https://forum.djangoproject.com/c/announcements/7.rss
+    - id: django_releases
+      type: rss
+      url: https://github.com/django/django/releases.atom
+    - id: django_security_announcements
+      type: rss
+      url: https://forum.djangoproject.com/c/security/11.rss
+    - id: django_software_foundation
+      type: rss
+      url: https://www.djangoproject.com/rss/foundation/
+      enabled: false
+    - id: django_news_newsletter
+      type: rss
+      url: https://django-news.com/issues.rss
+    - id: django_forum_dev
+      type: rss
+      url: https://forum.djangoproject.com/c/development/5.rss
   ai:
     ingest:
       max_items_per_source: 200
-
     bulletin:
       max_items: 10
-      sections: ["industry", "arxiv"]
-
+      sections:
+      - industry
+      - arxiv
     sources:
-      - id: "openai"
-        type: "rss"
-        url: "https://openai.com/news/rss.xml"
-        tags: ["industry"]
-
-      - id: "google_ai"
-        type: "rss"
-        url: "https://blog.google/technology/ai/rss/"
-        tags: ["industry"]
-
-      - id: "deepmind"
-        type: "rss"
-        url: "https://deepmind.google/blog/rss.xml"
-        tags: ["industry"]
-
-      - id: "hugging_face"
-        type: "rss"
-        url: "https://huggingface.co/blog/feed.xml"
-        tags: ["industry"]
-
-      - id: "microsoft_ai"
-        type: "rss"
-        url: "https://blogs.microsoft.com/ai/feed/"
-        tags: ["industry"]
-
-      - id: "xataka_ia"
-        type: "rss"
-        url: "https://www.xataka.com/tag/inteligencia-artificial/rss2.xml"
-        tags: ["industry"]
-
-      - id: "mit_tech_review_ia"
-        type: "rss"
-        url: "https://www.technologyreview.com/topic/artificial-intelligence/feed/"
-        tags: ["industry"]
-
-      # arXiv: mejor usar rss.arxiv.org (más estable para RSS)
-      - id: "arxiv_cs_ai"
-        type: "rss"
-        url: "https://rss.arxiv.org/rss/cs.AI"
-        tags: ["arxiv"]
-
-      - id: "arxiv_cs_lg"
-        type: "rss"
-        url: "https://rss.arxiv.org/rss/cs.LG"
-        tags: ["arxiv"]
+    - id: openai
+      type: rss
+      url: https://openai.com/news/rss.xml
+      tags:
+      - industry
+    - id: google_ai
+      type: rss
+      url: https://blog.google/technology/ai/rss/
+      tags:
+      - industry
+    - id: deepmind
+      type: rss
+      url: https://deepmind.google/blog/rss.xml
+      tags:
+      - industry
+    - id: hugging_face
+      type: rss
+      url: https://huggingface.co/blog/feed.xml
+      tags:
+      - industry
+    - id: microsoft_ai
+      type: rss
+      url: https://blogs.microsoft.com/ai/feed/
+      tags:
+      - industry
+    - id: xataka_ia
+      type: rss
+      url: https://www.xataka.com/tag/inteligencia-artificial/rss2.xml
+      tags:
+      - industry
+    - id: mit_tech_review_ia
+      type: rss
+      url: https://www.technologyreview.com/topic/artificial-intelligence/feed/
+      tags:
+      - industry
+    - id: arxiv_cs_ai
+      type: rss
+      url: https://rss.arxiv.org/rss/cs.AI
+      tags:
+      - arxiv
+    - id: arxiv_cs_lg
+      type: rss
+      url: https://rss.arxiv.org/rss/cs.LG
+      tags:
+      - arxiv

@@ -5,6 +5,8 @@ import requests
 import psycopg
 import trafilatura 
 import hashlib
+import yaml
+import re
 from datetime import datetime, timezone
 from bs4 import BeautifulSoup
 from fastapi import FastAPI, HTTPException
@@ -200,3 +202,128 @@ def list_archived_bulletins():
     pdfs.sort(key=lambda x: x["date"], reverse=True)
     
     return {"pdfs": pdfs}
+
+# --- MODELOS PARA RSS ---
+class RSSSource(BaseModel):
+    name: str
+    url: str
+    topic: str
+
+def validate_rss_url(url: str) -> bool:
+    """Comprueba de forma rápida si una URL devuelve un XML/RSS válido."""
+    try:
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        res = requests.get(url, headers=headers, timeout=10)
+        res.raise_for_status()
+        content = res.text.lower()
+        if "<?xml" in content or "<rss" in content or "<feed" in content:
+            return True
+        return False
+    except:
+        return False
+
+@app.get("/api/sources")
+def get_all_sources():
+    """Lee y devuelve todas las fuentes del archivo YAML estructurado."""
+    sources = []
+    yaml_path = "/workspace/sources.yaml"
+    
+    if os.path.exists(yaml_path):
+        with open(yaml_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+            
+            # Navegar a la sección 'topics'
+            topics = data.get("topics", {})
+            for topic_name, topic_data in topics.items():
+                if isinstance(topic_data, dict):
+                    topic_sources = topic_data.get("sources", [])
+                    # Iterar sobre la lista de diccionarios de fuentes
+                    for src in topic_sources:
+                        if isinstance(src, dict) and "url" in src:
+                            sources.append({
+                                "id": src.get("id", f"{topic_name}-{src['url']}"),
+                                "name": src.get("name", src.get("id", "RSS Feed")),
+                                "url": src["url"],
+                                "topic": topic_name,
+                                "status": "pending"
+                            })
+                    
+    return {"sources": sources}
+
+@app.post("/api/sources/validate")
+def validate_single_source(source: RSSSource):
+    """Valida una URL y devuelve si está viva o rota."""
+    is_valid = validate_rss_url(source.url)
+    if not is_valid:
+        raise HTTPException(status_code=400, detail="La URL no parece ser un RSS válido o está caída.")
+    return {"message": "RSS válido", "status": "valid"}
+
+@app.post("/api/sources")
+def add_new_source(source: RSSSource):
+    """Añade una nueva fuente respetando la estructura del YAML."""
+    if not validate_rss_url(source.url):
+        raise HTTPException(status_code=400, detail="El enlace no es un RSS válido.")
+        
+    yaml_path = "/workspace/sources.yaml"
+    data = {}
+    if os.path.exists(yaml_path):
+        with open(yaml_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+            
+    if "topics" not in data:
+        data["topics"] = {}
+        
+    topic_key = source.topic.lower()
+    if topic_key not in data["topics"]:
+        data["topics"][topic_key] = {"sources": []}
+        
+    if "sources" not in data["topics"][topic_key]:
+        data["topics"][topic_key]["sources"] = []
+        
+    # Comprobar si la URL ya existe en este topic
+    existing_urls = [s.get("url") for s in data["topics"][topic_key]["sources"] if isinstance(s, dict)]
+    
+    if source.url not in existing_urls:
+        # Generar un ID limpio basado en el nombre (ej: "Mi Blog" -> "mi_blog")
+        clean_id = re.sub(r'[^a-z0-9]', '_', source.name.lower())
+        if not clean_id:
+            clean_id = f"custom_rss_{len(existing_urls)}"
+            
+        new_source = {
+            "id": clean_id,
+            "type": "rss",
+            "name": source.name,
+            "url": source.url,
+            "tags": ["custom"]
+        }
+        
+        data["topics"][topic_key]["sources"].append(new_source)
+        
+        with open(yaml_path, "w", encoding="utf-8") as f:
+            # sort_keys=False para que no nos desordene las propiedades del YAML
+            yaml.dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+            
+    return {"message": "Fuente guardada con éxito."}
+
+@app.delete("/api/sources")
+def delete_source(topic: str, url: str):
+    """Elimina una fuente del YAML estructurado."""
+    yaml_path = "/workspace/sources.yaml"
+    
+    if os.path.exists(yaml_path):
+        with open(yaml_path, "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+            
+        topic_key = topic.lower()
+        if "topics" in data and topic_key in data["topics"] and "sources" in data["topics"][topic_key]:
+            sources_list = data["topics"][topic_key]["sources"]
+            
+            # Filtramos para quedarnos con todas MENOS la que coincide con la URL
+            new_sources_list = [s for s in sources_list if isinstance(s, dict) and s.get("url") != url]
+            
+            if len(sources_list) != len(new_sources_list):
+                data["topics"][topic_key]["sources"] = new_sources_list
+                with open(yaml_path, "w", encoding="utf-8") as f:
+                    yaml.dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+                
+    return {"message": "Fuente eliminada con éxito."}

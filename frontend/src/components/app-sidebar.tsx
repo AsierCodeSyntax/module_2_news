@@ -9,9 +9,10 @@ import {
   Archive,
   Settings,
   Eye,
+  Rss,
 } from "lucide-react"
 
-type View = "home" | "module" | "add-news" | "review"
+type View = "home" | "module" | "add-news" | "review" | "archive" | "sources"
 
 interface AppSidebarProps {
   currentView: View
@@ -24,6 +25,8 @@ const navItems = [
   { id: "add-news" as View, label: "Add News", icon: PlusCircle },
   { id: "review" as View, label: "Review Bulletin", icon: Eye },
   { id: "archive" as View, label: "Archive", icon: Archive },
+  { id: "sources" as View, label: "RSS Sources", icon: Rss },
+
 
 ]
 
