@@ -335,16 +335,27 @@ def get_dashboard_stats():
     now = datetime.now(timezone.utc)
     seven_days_ago = now - timedelta(days=7)
 
+    
     # 1. Contar fuentes activas en los YAMLs
     active_sources = 0
-    for yaml_file in ["/workspace/sources.yaml", "/workspace/sources_ia.yaml"]:
-        if os.path.exists(yaml_file):
-            with open(yaml_file, "r", encoding="utf-8") as f:
-                data = yaml.safe_load(f) or {}
-                if "topics" in data:
-                    for t, t_data in data["topics"].items():
-                        if isinstance(t_data, dict) and "sources" in t_data:
-                            active_sources += len(t_data["sources"])
+    
+    # Archivo 1: sources.yaml (Estructura: topics -> plone -> sources)
+    if os.path.exists("/workspace/sources.yaml"):
+        with open("/workspace/sources.yaml", "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+            if "topics" in data:
+                for t, t_data in data["topics"].items():
+                    if isinstance(t_data, dict) and "sources" in t_data:
+                        active_sources += len(t_data["sources"])
+
+    # Archivo 2: sources_ia.yaml (Estructura: ai -> rss)
+    if os.path.exists("/workspace/sources_ia.yaml"):
+        with open("/workspace/sources_ia.yaml", "r", encoding="utf-8") as f:
+            data = yaml.safe_load(f) or {}
+            for t, t_data in data.items():
+                # Verificamos que sea un diccionario y tenga la clave 'rss'
+                if isinstance(t_data, dict) and "rss" in t_data:
+                    active_sources += len(t_data["rss"])
 
     with psycopg.connect(db_url) as conn:
         with conn.cursor() as cur:

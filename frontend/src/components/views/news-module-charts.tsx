@@ -163,7 +163,7 @@ export function M2ChartsView({ onNavigate }: HomeViewProps) {
                                 <Rss className="size-5 text-orange-500" />
                             </div>
                             <div className="flex flex-col">
-                                <span className="text-xs font-medium text-muted-foreground">Active Sources</span>
+                                <span className="text-xs font-medium text-muted-foreground">Different Sources</span>
                                 <span className="mt-0.5 text-2xl font-semibold tracking-tight text-foreground">{stats.kpis.active_sources}</span>
                                 <span className="mt-1 text-xs text-muted-foreground">in YAML config</span>
                             </div>
