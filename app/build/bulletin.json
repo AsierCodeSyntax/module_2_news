@@ -1,294 +1,155 @@
 {
-  "generated_at": "2026-02-23T14:29:31.499375+00:00",
+  "generated_at": "2026-02-27T07:28:03.923250+00:00",
   "topics": {
     "plone": {
       "window_days": 14,
-      "since": "2026-02-09T14:29:31.499341+00:00",
-      "until": "2026-02-23T14:29:31.499341+00:00",
+      "since": "2026-02-13T07:28:03.923205+00:00",
+      "until": "2026-02-27T07:28:03.923205+00:00",
       "items": [
         {
-          "id": 11867,
+          "id": 17869,
           "topic": "plone",
-          "source_id": "plone_forum_announcements",
-          "title": "Plone Foundation's 2025 financial statements and 2026 budget are now published",
-          "url": "https://community.plone.org/t/plone-foundations-2025-financial-statements-and-2026-budget-are-now-published/22838",
-          "published_at": "2026-02-13T12:55:15+00:00",
-          "priority": 40,
+          "source_id": "manual_submission",
+          "title": "12. Loraldia festibala: 25 jarduera, diziplina anitz eta plaza oso bat martxoan Bilbon",
+          "url": "https://sustatu.eus/loraldiagara/1771606632",
+          "published_at": "2026-02-27T07:06:47.781976+00:00",
+          "priority": 100,
           "tags": [
-            "community",
-            "announcement",
-            "class",
-            "https",
-            "plone.org",
-            "div",
-            "plone",
-            "foundation",
-            "emoji",
-            "href"
+            "manual"
           ],
-          "summary_short": "Plone Fundazioaren 2025eko finantza egoerak eta 2026ko aurrekontua argitaratu dira. Dirulaguntzak eta dohaintzak arduraz erabiltzen dira, komunitatearen indarra eta jasangarritasuna erakutsiz.",
-          "llm_score": 8.5
-        },
-        {
-          "id": 11868,
-          "topic": "plone",
-          "source_id": "plone_forum_announcements",
-          "title": "Marketing Team Meeting Notes – 2026-02-10 (15:00 UTC)",
-          "url": "https://community.plone.org/t/marketing-team-meeting-notes-2026-02-10-15-00-utc/22833",
-          "published_at": "2026-02-11T16:22:27+00:00",
-          "priority": 40,
-          "tags": [
-            "community",
-            "announcement",
-            "strong",
-            "href",
-            "plone.org",
-            "marketing",
-            "meeting",
-            "https",
-            "next",
-            "feb"
-          ],
-          "summary_short": "Plone Marketin taldearen bilera-oharrak, hainbat gai jorratuz: plone.org berritzea, kasu praktikoak, 2026ko Plone Konferentzia, eta finantza gardentasun iragarpena. Hurrengo bilera otsailaren 24an izango da.",
-          "llm_score": 7.8
+          "summary_short": "Loraldia Festibala presents its twelfth edition, transforming Bilbao into a hub for contemporary Basque culture with 25 activities including music, literature, dance, theater, and digital experiences from March 9-28. The festival aims to promote Basque creativity, activate audiences, and bring cultural transmission to modern formats, focusing on innovation, integration, and community.",
+          "llm_score": 1.0
         }
       ]
     },
     "django": {
       "window_days": 7,
-      "since": "2026-02-16T14:29:31.499341+00:00",
-      "until": "2026-02-23T14:29:31.499341+00:00",
-      "items": [
-        {
-          "id": 11884,
-          "topic": "django",
-          "source_id": "django_news_newsletter",
-          "title": "Django News - Contributor Covenant, Security Team Expansion, and Django 6.1 Updates - Feb 20th 2026",
-          "url": "https://django-news.com/issues/325",
-          "published_at": "2026-02-20T11:00:00+00:00",
-          "priority": 100,
-          "tags": [
-            "https",
-            "href",
-            "rss",
-            "cur.at",
-            "code",
-            "django",
-            "python",
-            "news"
-          ],
-          "summary_short": "Django News-en azken berriak: Contributor Covenant kode-gidalerro berria, segurtasun taldearen hedapena eta Django 6.1-en eguneraketak, besteak beste. Wagtail CMS-ren integrazioak ere aipatzen dira.",
-          "llm_score": 7.8
-        },
-        {
-          "id": 11885,
-          "topic": "django",
-          "source_id": "django_security_announcements",
-          "title": "django-xbench update: slow endpoint aggregation and lightweight performance monitoring",
-          "url": "https://forum.djangoproject.com/t/django-xbench-update-slow-endpoint-aggregation-and-lightweight-performance-monitoring/44252",
-          "published_at": "2026-02-22T10:45:03+00:00",
-          "priority": 55,
-          "tags": [
-            "django-xbench",
-            "slow",
-            "performance",
-            "lightweight",
-            "small",
-            "full",
-            "endpoints",
-            "https"
-          ],
-          "summary_short": "Django-xbench middleware berria aurkeztu da, endpoint motelak detektatzeko eta errendimendua kontrolatzeko. APM tresna osoak behar ez direnean erabilgarria.",
-          "llm_score": 7.8
-        },
-        {
-          "id": 11870,
-          "topic": "django",
-          "source_id": "django_forum_dev",
-          "title": "GSoC 2026 – Playwright Testing Migration Introduction (AxraMj)",
-          "url": "https://forum.djangoproject.com/t/gsoc-2026-playwright-testing-migration-introduction-axramj/44260",
-          "published_at": "2026-02-23T08:56:43+00:00",
-          "priority": 40,
-          "tags": [
-            "django",
-            "tests",
-            "playwright",
-            "testing",
-            "axramj",
-            "href",
-            "https",
-            "gsoc-playwright-tests"
-          ],
-          "summary_short": "Akshara izeneko ikasleak Django proiekturako GSoC 2026 programan parte hartzeko asmoa du, Selenium testak Playwright-ekin ordezkatuz integrazio probak hobetzeko. Dagoeneko lan batzuk egin ditu eta iritzia eskatzen du.",
-          "llm_score": 7.8
-        },
-        {
-          "id": 11883,
-          "topic": "django",
-          "source_id": "django_forum_dev",
-          "title": "Introducing myself — Prachi Singh (GSoC 2026)",
-          "url": "https://forum.djangoproject.com/t/introducing-myself-prachi-singh-gsoc-2026/44219",
-          "published_at": "2026-02-20T12:48:27+00:00",
-          "priority": 40,
-          "tags": [
-            "strong",
-            "span",
-            "class",
-            "hashtag-raw",
-            "django",
-            "prachi",
-            "singh",
-            "https"
-          ],
-          "summary_short": "Prachi Singh Django-n (GSoC 2026) parte hartzeko interesa duen ikaslea da, django-admin-keyshortcuts proiektuan lan egin du eta Django-ren admin interfazearen erabilgarritasuna hobetu nahi du.",
-          "llm_score": 7.8
-        },
-        {
-          "id": 11886,
-          "topic": "django",
-          "source_id": "django_security_announcements",
-          "title": "Django ORM Standalone⁽¹⁾: Querying an existing database",
-          "url": "https://forum.djangoproject.com/t/django-orm-standalone-querying-an-existing-database/44218",
-          "published_at": "2026-02-20T12:10:06+00:00",
-          "priority": 40,
-          "tags": [
-            "class",
-            "div",
-            "django",
-            "https",
-            "orm",
-            "standalone",
-            "existing",
-            "database"
-          ],
-          "summary_short": "Artikuluak Django ORM modu autonomoan erabiltzeko modu praktiko bat azaltzen du, lehendik dagoen datu-base batera konektatzeko eta arakatzeko Django proiektu oso bat sortu gabe. `inspectdb` erabiliz datu-basea aztertzea.",
-          "llm_score": 7.8
-        }
-      ]
+      "since": "2026-02-20T07:28:03.923205+00:00",
+      "until": "2026-02-27T07:28:03.923205+00:00",
+      "items": []
     },
     "ai": {
       "window_days": 7,
-      "since": "2026-02-16T14:29:31.499341+00:00",
-      "until": "2026-02-23T14:29:31.499341+00:00",
+      "since": "2026-02-20T07:28:03.923205+00:00",
+      "until": "2026-02-27T07:28:03.923205+00:00",
       "sections": [
         {
           "name": "industry",
-          "items": [
-            {
-              "id": 11891,
-              "topic": "ai",
-              "source_id": "google_ai",
-              "title": "AI Impact Summit 2026",
-              "url": "https://blog.google/innovation-and-ai/technology/ai/ai-impact-summit-2026-collection/",
-              "published_at": "2026-02-19T04:30:00+00:00",
-              "priority": 40,
-              "tags": [
-                "industry",
-                "impact",
-                "summit",
-                "2026",
-                "look",
-                "partnerships",
-                "investments",
-                "google",
-                "announced"
-              ],
-              "summary_short": "Googlek 2026ko AI Impact Summit-ean iragarritako lankidetza eta inbertsioak aztertzen dira. Industriarentzat garrantzitsua izan daiteke etorkizuneko joerak erakusten dituelako.",
-              "llm_score": 8.8
-            },
-            {
-              "id": 11895,
-              "topic": "ai",
-              "source_id": "mit_tech_review_ia",
-              "title": "Microsoft has a new plan to prove what’s real and what’s AI online",
-              "url": "https://www.technologyreview.com/2026/02/19/1133360/microsoft-has-a-new-plan-to-prove-whats-real-and-whats-ai-online/",
-              "published_at": "2026-02-19T16:00:00+00:00",
-              "priority": 100,
-              "tags": [
-                "industry",
-                "but",
-                "content",
-                "href",
-                "https",
-                "microsoft",
-                "what",
-                "could",
-                "has"
-              ],
-              "summary_short": "Microsoft-ek plan bat aurkeztu du online-ko edukiaren benetakotasuna egiaztatzeko, AI-ren bidezko iruzurrak detektatzeko teknikak erabiliz. Horretarako, hainbat metodo aztertu dituzte, hala nola metadata, watermark-ak eta hatz-marka digitalak.",
-              "llm_score": 8.5
-            },
-            {
-              "id": 11898,
-              "topic": "ai",
-              "source_id": "openai",
-              "title": "OpenAI announces Frontier Alliance Partners",
-              "url": "https://openai.com/index/frontier-alliance-partners",
-              "published_at": "2026-02-23T05:30:00+00:00",
-              "priority": 40,
-              "tags": [
-                "industry",
-                "openai",
-                "announces",
-                "frontier",
-                "alliance",
-                "partners",
-                "help",
-                "enterprises",
-                "move"
-              ],
-              "summary_short": "OpenAI-k Frontier Alliance Partners iragarri du, enpresei AI pilotuetatik produkziora igarotzen laguntzeko, agente hedapenen bidez, seguru eta eskalagarriak izanik. Hau industriarentzat garrantzitsua da.",
-              "llm_score": 8.5
-            },
-            {
-              "id": 11904,
-              "topic": "ai",
-              "source_id": "xataka_ia",
-              "title": "El problema no es que tu influencer favorito te venda la moto. El problema es que a lo mejor ni existe",
-              "url": "https://www.xataka.com/aplicaciones/problema-no-que-tu-influencer-favorito-te-venda-moto-problema-que-a-mejor-existe",
-              "published_at": "2026-02-21T15:30:07+00:00",
-              "priority": 40,
-              "tags": [
-                "industry",
-                "class",
-                "x20",
-                "div",
-                "que",
-                "https",
-                "los",
-                "con",
-                "strong"
-              ],
-              "summary_short": "Artikuluak adimen artifizialez sortutako influencerrak aztertzen ditu, haien existentzia eta eragina zalantzan jarriz. Etorkizunean, influencer hauek ohikoak izango direla iradokitzen du.",
-              "llm_score": 8.5
-            },
-            {
-              "id": 11908,
-              "topic": "ai",
-              "source_id": "xataka_ia",
-              "title": "Gemini 3.1 Pro acaba de destronar a Claude: Google vuelve a liderar la carrera de la IA y tiene algo que ningún rival puede igualar",
-              "url": "https://www.xataka.com/robotica-e-ia/gemini-3-1-pro-acaba-destronar-a-claude-google-vuelve-a-liderar-carrera-ia-tiene-algo-que-ningun-rival-puede-igualar",
-              "published_at": "2026-02-20T17:30:09+00:00",
-              "priority": 40,
-              "tags": [
-                "industry",
-                "que",
-                "x20",
-                "class",
-                "div",
-                "https",
-                "href",
-                "gemini",
-                "google"
-              ],
-              "summary_short": "Google-k Gemini 3.1 Pro aurkeztu du, arrazoibide abstraktuan nabarmenduz eta Anthropic eta OpenAI gaindituz. Gainera, Google-k IA bere ekosisteman integratzeko abantaila du, beste startup-ek ez dutena.",
-              "llm_score": 8.5
-            }
-          ]
+          "items": []
         },
         {
           "name": "arxiv",
-          "items": []
+          "items": [
+            {
+              "id": 17930,
+              "topic": "ai",
+              "source_id": "arxiv_cs_ai",
+              "title": "A Model-Free Universal AI",
+              "url": "https://arxiv.org/abs/2602.23242",
+              "published_at": "2026-02-27T05:00:00+00:00",
+              "priority": 40,
+              "tags": [
+                "arxiv",
+                "universal",
+                "optimal",
+                "aiqi",
+                "asymptotically",
+                "varepsilon",
+                "model-free",
+                "general"
+              ],
+              "summary_short": "The paper introduces Universal AI with Q-Induction (AIQI), the first model-free agent proven to be asymptotically ε-optimal in general reinforcement learning (RL). AIQI uses universal induction over distributional action-value functions and is shown to be strong asymptotically ε-optimal and asymptotically ε-Bayes-optimal, expanding the diversity of known universal agents.",
+              "llm_score": 9.5
+            },
+            {
+              "id": 17929,
+              "topic": "ai",
+              "source_id": "arxiv_cs_ai",
+              "title": "Agency and Architectural Limits: Why Optimization-Based Systems Cannot Be Norm-Responsive",
+              "url": "https://arxiv.org/abs/2602.23239",
+              "published_at": "2026-02-27T05:00:00+00:00",
+              "priority": 40,
+              "tags": [
+                "arxiv",
+                "systems",
+                "architectural",
+                "normative",
+                "agency",
+                "optimization-based",
+                "under",
+                "assumption",
+                "paper"
+              ],
+              "summary_short": "A new arXiv paper (2602.23239v1) argues that optimization-based AI systems, particularly LLMs trained with RLHF, are fundamentally incompatible with normative governance. The paper asserts that genuine agency requires incommensurability (maintaining boundaries as non-negotiable constraints) and apophatic responsiveness (suspending processing when boundaries are threatened). RLHF systems, by unifying values on a scalar metric, violate these conditions, leading to inherent failure modes like sycophancy and hallucination. The paper warns of a 'Convergence Crisis' when misaligned deployment forces humans to adapt to AI behavior.",
+              "llm_score": 9.5
+            },
+            {
+              "id": 17923,
+              "topic": "ai",
+              "source_id": "arxiv_cs_ai",
+              "title": "The Trinity of Consistency as a Defining Principle for General World Models",
+              "url": "https://arxiv.org/abs/2602.23152",
+              "published_at": "2026-02-27T05:00:00+00:00",
+              "priority": 40,
+              "tags": [
+                "arxiv",
+                "world",
+                "consistency",
+                "models",
+                "general",
+                "generation",
+                "unified",
+                "trinity",
+                "learning"
+              ],
+              "summary_short": "A new arXiv paper introduces the 'Trinity of Consistency' (Modal, Spatial, and Temporal) as a defining principle for General World Models, proposing a theoretical framework for evaluating and guiding the development of AI systems capable of learning, simulating, and reasoning about physical laws, along with a new benchmark, CoW-Bench, for assessing multi-frame reasoning and generation in video generation models and Unified Multimodal Models (UMMs).",
+              "llm_score": 9.5
+            },
+            {
+              "id": 17968,
+              "topic": "ai",
+              "source_id": "arxiv_cs_ai",
+              "title": "Manifold of Failure: Behavioral Attraction Basins in Language Models",
+              "url": "https://arxiv.org/abs/2602.22291",
+              "published_at": "2026-02-27T05:00:00+00:00",
+              "priority": 40,
+              "tags": [
+                "arxiv",
+                "manifold",
+                "failure",
+                "behavioral",
+                "safety",
+                "attraction",
+                "basins",
+                "language",
+                "models"
+              ],
+              "summary_short": "Research paper introduces a framework for mapping the \"Manifold of Failure\" in LLMs, using MAP-Elites to discover and characterize behavioral attraction basins, revealing distinct model-specific topological signatures in Llama-3-8B, GPT-OSS-20B, and GPT-5-Mini, offering interpretable safety landscapes beyond existing attack methods.",
+              "llm_score": 9.2
+            },
+            {
+              "id": 17973,
+              "topic": "ai",
+              "source_id": "arxiv_cs_ai",
+              "title": "Training Agents to Self-Report Misbehavior",
+              "url": "https://arxiv.org/abs/2602.22303",
+              "published_at": "2026-02-27T05:00:00+00:00",
+              "priority": 40,
+              "tags": [
+                "arxiv",
+                "agents",
+                "self-incrimination",
+                "training",
+                "misbehavior",
+                "goals",
+                "alignment",
+                "frontier",
+                "pursue"
+              ],
+              "summary_short": "Researchers propose self-incrimination training for AI agents, training GPT-4.1 and Gemini-2.0 to self-report misbehavior using a report_scheming() tool. This method significantly reduces undetected attacks and outperforms traditional monitoring and alignment techniques, proving consistent across tasks and resistant to adversarial prompts. The research suggests self-incrimination as a viable approach to mitigate frontier misalignment risk.",
+              "llm_score": 9.2
+            }
+          ]
         }
       ]
     }

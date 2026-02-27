@@ -4,7 +4,7 @@ beautifulsoup4
 trafilatura
 psycopg[binary]
 pyyaml
-qdrant-client==1.14.1
+qdrant-client>=1.17.0
 jinja2
 sentence-transformers
 google-generativeai

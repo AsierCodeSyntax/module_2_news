@@ -74,7 +74,7 @@ def save_analysis(item_id: int, topic: str, status: str, summary: str = "", fina
                     )
                     
                     if vector:
-                        qdrant = QdrantClient(url=qdrant_url)
+                        qdrant = QdrantClient(url=qdrant_url, timeout=10.0, check_compatibility=False)
                         new_qdrant_id = str(uuid.uuid4())
                         qdrant.upsert(
                             collection_name=COLLECTION_NAME,

@@ -22,14 +22,18 @@ def get_analyst_llm():
         llm = ChatOpenAI(
             base_url=base_url,
             api_key=os.environ.get("OLLAMA_API_KEY", "ollama"),
-            model=os.environ.get("OLLAMA_MODEL", "gemma3:12b-cloud")
+            model=os.environ.get("OLLAMA_MODEL", "gemma3:12b-cloud"),
+            max_retries=2,       
+            timeout=45.0
         )
     else:
         from langchain_google_genai import ChatGoogleGenerativeAI
         api_key = os.environ.get("GEMINI_API_KEY", "PUT_YOUR_KEY_HERE_IF_IT_FAILS")
         api_key = api_key.replace('"', '').replace("'", "")
-        llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key)
-        
+        llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=api_key,
+        max_retries=2,       
+        timeout=45.0
+        )
     return llm.with_structured_output(EvaluationResult)
 
 

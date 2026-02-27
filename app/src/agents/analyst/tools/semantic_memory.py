@@ -16,7 +16,7 @@ def check_semantic_memory(item_id: int, topic: str, title: str, content: str, so
     db_url = os.environ.get("DATABASE_URL")
     
     try:
-        qdrant = QdrantClient(url=qdrant_url)
+        qdrant = QdrantClient(url=qdrant_url, timeout=10.0, check_compatibility=False)
         text_to_embed = f"{topic}\n{title}\n{content}"
         vector = model.encode(text_to_embed).tolist()
         

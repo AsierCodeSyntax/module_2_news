@@ -32,16 +32,40 @@ export function AddNewsView({ onNavigate }: AddNewsViewProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
+
+    try {
+      // Usamos la variable de entorno que pusimos en Docker, o localhost por defecto
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000"
+
+      const response = await fetch(`${API_URL}/api/news/manual`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: url,
+          topic: topic
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Fallo al enviar la noticia a la API")
+      }
+
       setSubmitted(true)
       setUrl("")
       setTopic("")
       setTimeout(() => setSubmitted(false), 3000)
-    }, 2000)
+
+    } catch (error) {
+      console.error("Error:", error)
+      alert("Hubo un error al conectar con el servidor.")
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
